@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEK Automation Group — Automate Today. Elevate Tomorrow.</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0D1B4B;
+    --navy-mid: #1a2d6b;
+    --blue: #1A6FE8;
+    --blue-light: #3B8FFF;
+    --blue-pale: #E8F1FD;
+    --blue-xpale: #F0F6FF;
+    --steel: #6B7280;
+    --steel-light: #9CA3AF;
+    --steel-xlight: #F3F4F6;
+    --white: #ffffff;
+    --text-body: #374151;
+    --border: #E5E7EB;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: var(--text-body);
+    background: var(--white);
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4, .logo-text, nav a, .btn {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  /* ── NAV ─────────────────────────────────────────── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--navy);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-icon svg { width: 22px; height: 22px; }
+
+  .logo-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.15;
+  }
+
+  .logo-text span { color: var(--blue); }
+  .logo-sub { font-size: 10px; font-weight: 400; color: var(--steel); letter-spacing: 0.5px; display: block; }
+
+  .nav-links { display: flex; align-items: center; gap: 6px; }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--steel);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .nav-links a:hover { color: var(--navy); background: var(--steel-xlight); }
+
+  .nav-cta {
+    background: var(--blue) !important;
+    color: var(--white) !important;
+    padding: 8px 16px !important;
+    border-radius: var(--radius-md) !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+  }
+
+  .nav-cta:hover { background: var(--navy) !important; }
+
+  /* ── PAGE SECTIONS ───────────────────────────────── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HERO ────────────────────────────────────────── */
+  .hero {
+    background: var(--navy);
+    padding: 96px 32px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(26,111,232,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(26,111,232,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(26,111,232,0.2);
+    border: 1px solid rgba(59,143,255,0.35);
+    color: #7EB8FF;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    max-width: 700px;
+    margin: 0 auto 20px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero h1 span { color: var(--blue-light); }
+
+  .hero-sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.65);
+    max-width: 520px;
+    margin: 0 auto 40px;
+    line-height: 1.65;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 56px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+
+  .btn-primary { background: var(--blue); color: var(--white); }
+  .btn-primary:hover { background: var(--blue-light); transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.3);
+  }
+
+  .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+
+  .btn-navy { background: var(--navy); color: var(--white); }
+  .btn-navy:hover { background: var(--navy-mid); }
+
+  .hero-trust {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .trust-dot {
+    width: 6px; height: 6px;
+    background: var(--blue-light);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── STATS BAR ───────────────────────────────────── */
+  .stats-bar {
+    background: var(--blue-xpale);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 32px;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .stat-item {
+    flex: 1;
+    max-width: 200px;
+    text-align: center;
+    padding: 0 24px;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label { font-size: 12px; color: var(--steel); font-weight: 500; }
+
+  /* ── SECTIONS ────────────────────────────────────── */
+  section {
+    padding: 80px 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  section.full-width {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .section-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+
+  .section-h2 {
+    font-size: clamp(24px, 3.5vw, 36px);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 14px;
+    letter-spacing: -0.3px;
+  }
+
+  .section-sub {
+    font-size: 17px;
+    color: var(--steel);
+    line-height: 1.65;
+    max-width: 560px;
+    margin-bottom: 48px;
+  }
+
+  /* ── SERVICES GRID ───────────────────────────────── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    transition: border-color 0.15s, transform 0.15s;
+    cursor: pointer;
+  }
+
+  .service-card:hover {
+    border-color: var(--blue);
+    transform: translateY(-2px);
+  }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    background: var(--blue-pale);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .service-icon svg { width: 24px; height: 24px; stroke: var(--blue); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  .service-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .service-card p {
+    font-size: 14px;
+    color: var(--steel);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  .service-benefit {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--blue);
+    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  /* ── HOW IT WORKS ────────────────────────────────── */
+  .how-bg {
+    background: var(--navy);
+    padding: 80px 32px;
+  }
+
+  .how-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .how-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+  }
+
+  .how-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--blue-light);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .how-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .how-card p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.65; }
+
+  /* ── CTA STRIP ───────────────────────────────────── */
+  .cta-strip {
+    background: var(--blue-xpale);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 52px 40px;
+    text-align: center;
+    margin: 0 32px;
+  }
+
+  .cta-strip h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .cta-strip p {
+    font-size: 16px;
+    color: var(--steel);
+    margin-bottom: 28px;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── WORK GALLERY ────────────────────────────────── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .gallery-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .gallery-card:hover { border-color: var(--blue); }
+
+  .gallery-thumb {
+    height: 180px;
+    background: var(--blue-xpale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .gallery-thumb svg { width: 48px; height: 48px; stroke: var(--blue); fill: none; stroke-width: 1.2; opacity: 0.4; }
+
+  .gallery-info { padding: 16px 20px; }
+  .gallery-info h3 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .gallery-info p { font-size: 12px; color: var(--steel); }
+
+  .gallery-tag {
+    display: inline-block;
+    background: var(--blue-pale);
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 100px;
+    margin-top: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-lg);
+    padding: 48px;
+    text-align: center;
+    color: var(--steel-light);
+    margin-top: 24px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .upload-zone:hover { border-color: var(--blue); background: var(--blue-xpale); }
+  .upload-zone svg { width: 40px; height: 40px; stroke: var(--steel-light); fill: none; margin-bottom: 12px; }
+  .upload-zone p { font-size: 14px; margin-bottom: 4px; }
+  .upload-zone span { font-size: 12px; color: var(--blue); }
+
+  /* ── ABOUT ───────────────────────────────────────── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .about-visual {
+    background: var(--navy);
+    border-radius: var(--radius-xl);
+    padding: 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(26,111,232,0.25) 0%, transparent 70%);
+  }
+
+  .about-tagline {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+
+  .about-tagline span { color: var(--blue-light); }
+
+  .about-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--blue);
+    margin: 0 auto 20px;
+  }
+
+  .about-slogan {
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .about-content h2 { margin-bottom: 16px; }
+
+  .about-content p {
+    font-size: 15px;
+    color: var(--steel);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .value-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+
+  .value-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text-body);
+  }
+
+  .value-dot {
+    width: 8px; height: 8px;
+    background: var(--blue);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+
+  /* ── CONTACT ─────────────────────────────────────── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .contact-info h2 { margin-bottom: 14px; }
+  .contact-info p { font-size: 15px; color: var(--steel); line-height: 1.7; margin-bottom: 32px; }
+
+  .contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: var(--text-body);
+  }
+
+  .contact-detail-icon {
+    width: 36px; height: 36px;
+    background: var(--blue-pale);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-detail-icon svg { width: 18px; height: 18px; stroke: var(--blue); fill: none; stroke-width: 1.8; }
+
+  .contact-form-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 36px;
+  }
+
+  .form-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 24px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .form-group { margin-bottom: 16px; }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    color: var(--text-body);
+    background: var(--white);
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(26,111,232,0.1);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .form-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: background 0.15s;
+    margin-top: 8px;
+  }
+
+  .form-submit:hover { background: var(--blue); }
+
+  .form-note { font-size: 11px; color: var(--steel-light); text-align: center; margin-top: 10px; }
+
+  /* ── LEAD MAGNET BANNER ──────────────────────────── */
+  .lead-magnet {
+    background: var(--navy);
+    border-radius: var(--radius-xl);
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-top: 32px;
+  }
+
+  .lead-magnet-icon {
+    width: 56px; height: 56px;
+    background: rgba(26,111,232,0.25);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .lead-magnet-icon svg { width: 28px; height: 28px; stroke: var(--blue-light); fill: none; stroke-width: 1.8; }
+
+  .lead-magnet-text h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .lead-magnet-text p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+  .lead-magnet-btn {
+    margin-left: auto;
+    flex-shrink: 0;
+    background: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+
+  .lead-magnet-btn:hover { background: var(--blue-light); }
+
+  /* ── FOOTER ──────────────────────────────────────── */
+  footer {
+    background: var(--navy);
+    padding: 48px 32px 32px;
+    margin-top: 80px;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .footer-brand .logo-text { color: var(--white); }
+  .footer-brand .logo-sub { color: rgba(255,255,255,0.4); }
+
+  .footer-tagline {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    margin-top: 10px;
+  }
+
+  .footer-links h4 {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .footer-links a {
+    display: block;
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: color 0.15s;
+    cursor: pointer;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+  .footer-slogan { font-size: 11px; color: var(--blue-light); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif; opacity: 0.7; }
+
+  /* ── SUCCESS STATE ───────────────────────────────── */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 48px 24px;
+  }
+
+  .form-success.show { display: block; }
+  .form-success svg { width: 56px; height: 56px; stroke: var(--blue); fill: none; margin: 0 auto 16px; display: block; }
+  .form-success h3 { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .form-success p { font-size: 14px; color: var(--steel); }
+
+  /* ── RESPONSIVE ──────────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 0 16px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero { padding: 64px 20px 56px; }
+    section { padding: 56px 20px; }
+    .how-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .lead-magnet { flex-direction: column; text-align: center; }
+    .lead-magnet-btn { margin: 0 auto; }
+    .cta-strip { margin: 0 16px; padding: 36px 24px; }
+    .stats-bar { flex-wrap: wrap; gap: 16px; padding: 24px 20px; }
+    .stat-item { border-right: none; max-width: 100%; min-width: 120px; }
+    .footer-inner { flex-direction: column; gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo-wrap" onclick="showPage('home')" href="#">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-text">SEK <span>Automation</span> Group</div>
+      <span class="logo-sub">Automate Today. Elevate Tomorrow.</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('services')">Services</a>
+    <a onclick="showPage('work')">Our Work</a>
+    <a onclick="showPage('about')">About</a>
+    <a onclick="showPage('contact')" class="nav-cta">Get a Free Assessment</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <div class="hero">
+    <div class="hero-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+      AI Solutions for Small Business
+    </div>
+    <h1>Stop doing everything yourself —<br><span>let AI handle the busy work</span></h1>
+    <p class="hero-sub">SEK Automation Group helps small businesses save time, cut costs, and grow faster with simple, done-for-you AI tools. No tech skills needed.</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary" onclick="showPage('contact')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Get a Free AI Assessment
+      </button>
+      <button class="btn btn-outline" onclick="showPage('work')">See Our Work →</button>
+    </div>
+    <div class="hero-trust">
+      <span class="trust-item"><span class="trust-dot"></span>Save 10+ hours per week</span>
+      <span class="trust-item"><span class="trust-dot"></span>Affordable for small teams</span>
+      <span class="trust-item"><span class="trust-dot"></span>Up and running in days</span>
+      <span class="trust-item"><span class="trust-dot"></span>Zero tech skills required</span>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">10+</div>
+      <div class="stat-label">Hours saved per week</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">48 hrs</div>
+      <div class="stat-label">Average setup time</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Tech skills required</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">24/7</div>
+      <div class="stat-label">AI working for you</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-label">What we do</div>
+    <h2 class="section-h2">AI solutions built for businesses like yours</h2>
+    <p class="section-sub">We design and set up automation tools that work in the background — so you can focus on what actually grows your business.</p>
+
+    <div class="services-grid">
+      <div class="service-card" onclick="showPage('services')">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>AI Customer Service</h3>
+        <p>Answer customer questions 24/7 without lifting a finger. Never miss a lead again.</p>
+        <div class="service-benefit">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Works while you sleep
+        </div>
+      </div>
+      <div class="service-card" onclick="showPage('services')">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Workflow Automation</h3>
+        <p>Eliminate repetitive tasks that eat up your day. More done, less effort, fewer errors.</p>
+        <div class="service-benefit">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Saves 5–15 hrs/week
+        </div>
+      </div>
+      <div class="service-card" onclick="showPage('services')">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3>AI Marketing Materials</h3>
+        <p>Professional flyers, posts, and campaigns — fast. Fraction of the agency cost.</p>
+        <div class="service-benefit">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Fast turnaround
+        </div>
+      </div>
+      <div class="service-card" onclick="showPage('services')">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Lead Generation</h3>
+        <p>Capture and follow up with new leads automatically. Never let a hot lead go cold again.</p>
+        <div class="service-benefit">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          More conversions, less effort
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="how-bg">
+    <div class="how-inner">
+      <div class="section-label" style="color:#7EB8FF;">How it works</div>
+      <h2 class="section-h2" style="color:white;">From first chat to live in 3 steps</h2>
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="how-num">01</div>
+          <h3>Free assessment</h3>
+          <p>We learn about your business, your biggest pain points, and exactly where you're losing time or money.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-num">02</div>
+          <h3>We build it for you</h3>
+          <p>No homework on your end. We design, configure, and test your automation solution from start to finish.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-num">03</div>
+          <h3>You go live</h3>
+          <p>We walk you through everything and make sure it's running smoothly before we hand it over.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding-bottom: 0;">
+    <div class="cta-strip">
+      <h2>Ready to take back your time?</h2>
+      <p>Tell us about your business — we'll show you exactly where AI can help.</p>
+      <button class="btn btn-primary" onclick="showPage('contact')">Get My Free Assessment →</button>
+    </div>
+  </section>
+
+  <div style="height: 80px;"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: SERVICES
+══════════════════════════════════════════════════ -->
+<div id="page-services" class="page">
+
+  <div class="hero" style="padding: 72px 32px 64px;">
+    <div class="hero-badge">Our Services</div>
+    <h1 style="font-size: clamp(28px, 4vw, 42px);">What SEK Automation Group<br><span>does for your business</span></h1>
+    <p class="hero-sub">We don't just sell you software — we set everything up, make sure it works, and make sure you understand it. Every solution is tailored to your business.</p>
+  </div>
+
+  <section>
+    <div style="display: flex; flex-direction: column; gap: 48px;">
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+        <div>
+          <div class="section-label">Service 01</div>
+          <h2 class="section-h2" style="font-size: 26px;">AI Customer Service Chatbot</h2>
+          <p style="color: var(--steel); margin-bottom: 16px; font-size: 15px; line-height: 1.7;">Most small businesses lose customers simply because nobody answered fast enough. Our AI chatbots respond to common questions, qualify leads, book appointments, and collect contact info automatically — all day, every day, without hiring extra staff.</p>
+          <ul class="value-list">
+            <li><span class="value-dot"></span>Responds instantly to common customer questions</li>
+            <li><span class="value-dot"></span>Books appointments directly into your calendar</li>
+            <li><span class="value-dot"></span>Captures leads even when you're off the clock</li>
+            <li><span class="value-dot"></span>Works across your website, Facebook, and Instagram</li>
+          </ul>
+        </div>
+        <div style="background: var(--blue-xpale); border-radius: var(--radius-xl); padding: 40px; text-align: center; border: 1px solid var(--border);">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.2" stroke-linecap="round" style="margin-bottom: 16px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <p style="font-size: 14px; color: var(--steel);">Avg. response time: <strong style="color: var(--navy);">under 3 seconds</strong></p>
+        </div>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid var(--border);">
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+        <div style="background: var(--navy); border-radius: var(--radius-xl); padding: 40px; text-align: center;">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--blue-light)" stroke-width="1.2" stroke-linecap="round" style="margin-bottom: 16px; opacity: 0.8;"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <p style="font-size: 14px; color: rgba(255,255,255,0.5);">Save up to <strong style="color: white;">15 hours</strong> every week</p>
+        </div>
+        <div>
+          <div class="section-label">Service 02</div>
+          <h2 class="section-h2" style="font-size: 26px;">Workflow & Process Automation</h2>
+          <p style="color: var(--steel); margin-bottom: 16px; font-size: 15px; line-height: 1.7;">If you find yourself doing the same thing more than twice a week, it can probably be automated. We map your current process, find the bottlenecks, and build automations that handle invoicing, follow-ups, scheduling, and reporting.</p>
+          <ul class="value-list">
+            <li><span class="value-dot"></span>Automated invoicing and payment reminders</li>
+            <li><span class="value-dot"></span>Appointment confirmations and follow-ups</li>
+            <li><span class="value-dot"></span>Weekly reports generated automatically</li>
+            <li><span class="value-dot"></span>Scales with your business as you grow</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid var(--border);">
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+        <div>
+          <div class="section-label">Service 03</div>
+          <h2 class="section-h2" style="font-size: 26px;">AI Marketing Materials</h2>
+          <p style="color: var(--steel); margin-bottom: 16px; font-size: 15px; line-height: 1.7;">From eye-catching flyers to social media campaigns, we use AI tools to produce polished, on-brand content for your business in a fraction of the time and cost of a traditional agency.</p>
+          <ul class="value-list">
+            <li><span class="value-dot"></span>Custom flyers for events and promotions</li>
+            <li><span class="value-dot"></span>Social media content calendars</li>
+            <li><span class="value-dot"></span>Email campaign templates</li>
+            <li><span class="value-dot"></span>On-brand every single time</li>
+          </ul>
+        </div>
+        <div style="background: var(--blue-xpale); border-radius: var(--radius-xl); padding: 40px; text-align: center; border: 1px solid var(--border);">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.2" stroke-linecap="round" style="margin-bottom: 16px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <p style="font-size: 14px; color: var(--steel);">Fraction of <strong style="color: var(--navy);">agency pricing</strong></p>
+        </div>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid var(--border);">
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+        <div style="background: var(--navy); border-radius: var(--radius-xl); padding: 40px; text-align: center;">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--blue-light)" stroke-width="1.2" stroke-linecap="round" style="margin-bottom: 16px; opacity: 0.8;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <p style="font-size: 14px; color: rgba(255,255,255,0.5);">More revenue, <strong style="color: white;">less chasing</strong></p>
+        </div>
+        <div>
+          <div class="section-label">Service 04</div>
+          <h2 class="section-h2" style="font-size: 26px;">AI Lead Generation & Follow-Up</h2>
+          <p style="color: var(--steel); margin-bottom: 16px; font-size: 15px; line-height: 1.7;">We set up systems that capture leads from your website, social pages, or ads — then automatically follow up with the right message at the right time. More replies, more booked calls, more revenue.</p>
+          <ul class="value-list">
+            <li><span class="value-dot"></span>Automated email and SMS follow-up sequences</li>
+            <li><span class="value-dot"></span>Lead capture forms that actually convert</li>
+            <li><span class="value-dot"></span>CRM integration and contact management</li>
+            <li><span class="value-dot"></span>Runs 24/7 without manual effort</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="padding-top: 0;">
+    <div class="cta-strip">
+      <h2>Not sure which service you need?</h2>
+      <p>That's what the free assessment is for. Tell us what's slowing you down and we'll figure it out together.</p>
+      <button class="btn btn-primary" onclick="showPage('contact')">Get My Free Assessment →</button>
+    </div>
+  </section>
+  <div style="height: 40px;"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: OUR WORK
+══════════════════════════════════════════════════ -->
+<div id="page-work" class="page">
+
+  <style>
+    /* ── WORK PAGE EXTRAS ─────────────────────────── */
+    .work-featured {
+      background: var(--navy);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin-bottom: 16px;
+      border: 1px solid rgba(26,111,232,0.3);
+    }
+    .work-featured-header {
+      padding: 20px 28px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .work-featured-meta { display: flex; align-items: center; gap: 12px; }
+    .work-featured-dot { width: 10px; height: 10px; background: var(--blue-light); border-radius: 50%; animation: wpulse 2s infinite; }
+    @keyframes wpulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+    .work-featured-title { font-size: 15px; font-weight: 700; color: white; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .work-featured-sub { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 1px; }
+    .work-featured-tag { background: rgba(26,111,232,0.25); color: #7EB8FF; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 100px; border: 1px solid rgba(26,111,232,0.4); font-family: 'Plus Jakarta Sans', sans-serif; }
+    .work-iframe-wrap { position: relative; width: 100%; height: 520px; }
+    .work-iframe-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+    .iframe-expand { position: absolute; bottom: 14px; right: 14px; background: rgba(13,27,75,0.85); border: 1px solid rgba(26,111,232,0.4); color: #7EB8FF; font-size: 11px; font-weight: 600; padding: 6px 14px; border-radius: 100px; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; backdrop-filter: blur(4px); text-decoration: none; }
+
+    /* onepager showcase */
+    .onepager-wrap {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .onepager-header {
+      background: #111111;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #2a2a2a;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .onepager-title { font-size: 15px; font-weight: 700; color: white; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .onepager-sub { font-size: 12px; color: #666; margin-top: 1px; }
+    .onepager-tag-o { background: rgba(244,80,10,0.2); color: #F4500A; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 100px; border: 1px solid rgba(244,80,10,0.35); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Onepager hero section */
+    .op-hero {
+      background: #111111;
+      padding: 48px 36px 40px;
+      border-bottom: 1px solid #222;
+      position: relative;
+      overflow: hidden;
+    }
+    .op-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(244,80,10,0.15) 0%, transparent 70%);
+    }
+    .op-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: .18em;
+      color: #F4500A; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .op-headline {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 800; line-height: 1;
+      text-transform: uppercase; letter-spacing: -.01em;
+      color: white; max-width: 680px; margin-bottom: 20px;
+    }
+    .op-headline em { font-style: normal; color: #F4500A; }
+    .op-sub { font-size: 16px; color: #aaa; max-width: 500px; line-height: 1.6; margin-bottom: 32px; }
+    .op-stats { display: flex; gap: 36px; flex-wrap: wrap; }
+    .op-stat-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 36px; font-weight: 800; color: #F4500A; line-height: 1; }
+    .op-stat-label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: .06em; margin-top: 3px; }
+
+    /* How it works */
+    .op-section { background: #111; padding: 48px 36px; border-bottom: 1px solid #222; }
+    .op-section-tag { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .15em; color: #F4500A; text-transform: uppercase; margin-bottom: 8px; }
+    .op-section-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(24px, 3.5vw, 36px); font-weight: 800; text-transform: uppercase; line-height: 1.05; color: white; margin-bottom: 32px; }
+
+    /* Phone mockup simplified */
+    .op-phone-flow { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+    .op-phone {
+      background: #0d0d0d; border: 1.5px solid #333; border-radius: 28px;
+      width: 200px; flex-shrink: 0; overflow: hidden;
+      box-shadow: 0 0 0 5px #1a1a1a;
+    }
+    .op-phone-notch { background: #0d0d0d; height: 24px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #1a1a1a; }
+    .op-phone-notch-pill { width: 64px; height: 8px; background: #222; border-radius: 10px; }
+    .op-phone-screen { background: #f0f0f0; padding: 10px; min-height: 280px; }
+    .op-phone-time { font-size: 10px; color: #555; text-align: center; margin-bottom: 8px; font-family: 'Inter', sans-serif; }
+    .op-notif { background: white; border-radius: 12px; padding: 8px 10px; margin-bottom: 7px; display: flex; align-items: flex-start; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+    .op-notif-icon { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+    .op-notif-app { font-size: 9px; color: #999; font-family: 'Inter', sans-serif; }
+    .op-notif-title { font-size: 11px; font-weight: 600; color: #111; font-family: 'Inter', sans-serif; }
+    .op-notif-body { font-size: 10px; color: #555; font-family: 'Inter', sans-serif; }
+    .op-stats-box { background: #e8e8e8; border-radius: 8px; padding: 8px 10px; margin-top: 12px; }
+    .op-stats-box-label { font-size: 9px; color: #777; font-family: 'Inter', sans-serif; margin-bottom: 4px; }
+    .op-stats-row-item { display: flex; justify-content: space-between; font-size: 10px; font-family: 'Inter', sans-serif; margin-top: 2px; }
+
+    /* SMS screen */
+    .op-sms-screen { background: #f0f0f0; padding: 10px; min-height: 280px; }
+    .op-sms-header { font-size: 10px; color: #555; text-align: center; margin-bottom: 8px; font-family: 'Inter', sans-serif; }
+    .op-bubble { max-width: 140px; padding: 7px 10px; border-radius: 12px; font-size: 10px; font-family: 'Inter', sans-serif; line-height: 1.4; margin-bottom: 5px; }
+    .op-bubble.out { background: #1A6FE8; color: white; margin-left: auto; border-radius: 12px 12px 3px 12px; }
+    .op-bubble.in { background: white; color: #111; border-radius: 12px 12px 12px 3px; }
+    .op-bubble-time { font-size: 9px; color: #999; text-align: right; font-family: 'Inter', sans-serif; margin-bottom: 6px; }
+
+    /* Flow connector */
+    .op-connector { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 4px; gap: 4px; align-self: center; }
+    .op-conn-dot { width: 6px; height: 6px; background: #F4500A; border-radius: 50%; }
+    .op-conn-line { width: 1px; height: 40px; background: #333; }
+    .op-conn-label { font-size: 10px; color: #F4500A; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: .05em; white-space: nowrap; }
+
+    /* Flow result */
+    .op-flow-result {
+      background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px;
+      padding: 24px; flex: 1; min-width: 160px; align-self: center;
+    }
+    .op-flow-result-icon { font-size: 28px; margin-bottom: 10px; }
+    .op-flow-result-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 800; color: white; line-height: 1.2; margin-bottom: 10px; }
+    .op-flow-result-body { font-size: 13px; color: #888; line-height: 1.6; }
+    .op-flow-result-body strong { color: white; }
+
+    /* Before/After */
+    .op-ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .op-ba-col { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 14px; padding: 20px; }
+    .op-ba-col.after { border-color: rgba(34,197,94,0.2); }
+    .op-ba-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 100px; display: inline-block; margin-bottom: 16px; }
+    .op-ba-label.before-l { background: rgba(239,68,68,0.15); color: #ef4444; }
+    .op-ba-label.after-l { background: rgba(34,197,94,0.15); color: #22c55e; }
+    .op-ba-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #888; line-height: 1.5; margin-bottom: 10px; }
+    .op-ba-icon { font-size: 16px; flex-shrink: 0; }
+
+    /* Services grid */
+    .op-services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+    .op-service-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 14px; padding: 22px; position: relative; overflow: hidden; transition: border-color 0.15s; }
+    .op-service-card:hover { border-color: #F4500A; }
+    .op-service-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 800; color: rgba(244,80,10,0.15); line-height: 1; margin-bottom: 8px; }
+    .op-service-icon { font-size: 24px; margin-bottom: 10px; }
+    .op-service-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: white; line-height: 1.2; margin-bottom: 8px; }
+    .op-service-desc { font-size: 13px; color: #777; line-height: 1.55; margin-bottom: 12px; }
+    .op-service-tag { background: rgba(244,80,10,0.12); color: #F4500A; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 100px; font-family: 'Plus Jakarta Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; display: inline-block; }
+
+    @media (max-width: 768px) {
+      .op-ba-grid { grid-template-columns: 1fr; }
+      .op-phone-flow { flex-direction: column; align-items: center; }
+      .op-connector { flex-direction: row; padding: 4px 0; }
+      .op-conn-line { width: 30px; height: 1px; }
+    }
+  </style>
+
+  <div class="hero" style="padding: 72px 32px 64px;">
+    <div class="hero-badge">Our Work</div>
+    <h1 style="font-size: clamp(28px, 4vw, 42px);">Real tools. Real results.<br><span>Built by us, for you.</span></h1>
+    <p class="hero-sub">A live look at the dashboards, automation systems, and marketing tools we've built for small businesses.</p>
+  </div>
+
+  <section>
+
+    <!-- ── FEATURED: CLARITY DASHBOARD ─────────────── -->
+    <div class="section-label">Featured project</div>
+    <h2 class="section-h2">Clarity — Business Intelligence Dashboard</h2>
+    <p class="section-sub" style="margin-bottom: 24px;">A fully interactive AI-powered analytics dashboard built for small business owners who want real-time visibility into revenue, leads, and operations — without hiring a data analyst.</p>
+
+    <div class="work-featured">
+      <div class="work-featured-header">
+        <div class="work-featured-meta">
+          <div class="work-featured-dot"></div>
+          <div>
+            <div class="work-featured-title">Clarity — Business Intelligence</div>
+            <div class="work-featured-sub">Live interactive demo · Built with Chart.js + custom AI data layer</div>
+          </div>
+        </div>
+        <span class="work-featured-tag">AI Dashboard</span>
+      </div>
+      <div class="work-iframe-wrap">
+        <iframe src="clarity-dashboard__2_.html" title="Clarity Business Intelligence Dashboard" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
+        <a class="iframe-expand" href="clarity-dashboard__2_.html" target="_blank">Open full screen ↗</a>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 56px;">
+      <div style="background: var(--blue-xpale); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--blue); font-family: 'Plus Jakarta Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px;">What it does</div>
+        <div style="font-size: 13px; color: var(--text-body);">Real-time revenue, lead, and operations tracking in one clean view</div>
+      </div>
+      <div style="background: var(--blue-xpale); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--blue); font-family: 'Plus Jakarta Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px;">Built with</div>
+        <div style="font-size: 13px; color: var(--text-body);">Chart.js, custom data layer, AI-generated insights, dark mode UI</div>
+      </div>
+      <div style="background: var(--blue-xpale); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--blue); font-family: 'Plus Jakarta Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px;">Who it's for</div>
+        <div style="font-size: 13px; color: var(--text-body);">Service businesses tracking jobs, revenue, and team performance</div>
+      </div>
+      <div style="background: var(--blue-xpale); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--blue); font-family: 'Plus Jakarta Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px;">Category</div>
+        <div style="font-size: 13px; color: var(--text-body);">Workflow Automation &amp; Business Intelligence</div>
+      </div>
+    </div>
+
+    <!-- ── FEATURED: LOCAL BIZ AI ONE PAGER ────────── -->
+    <div class="section-label" style="margin-top: 0;">Featured project</div>
+    <h2 class="section-h2">Local Business AI Automation — One Pager</h2>
+    <p class="section-sub" style="margin-bottom: 24px;">A complete AI automation pitch and explainer built for local service businesses. Shows exactly how missed call text-back, quote follow-ups, review requests, and appointment reminders work together to recover lost revenue.</p>
+
+    <div class="onepager-wrap">
+      <div class="onepager-header">
+        <div>
+          <div class="onepager-title">Stop Losing Customers While You're Busy Working</div>
+          <div class="onepager-sub">AI automation one-pager for local service businesses</div>
+        </div>
+        <span class="onepager-tag-o">Lead Generation System</span>
+      </div>
+
+      <!-- Hero -->
+      <div class="op-hero">
+        <div class="op-label">AI Automation for Local Businesses</div>
+        <h2 class="op-headline">Stop losing customers<br>while you're <em>busy working.</em></h2>
+        <p class="op-sub">Your phone rings. You can't answer. That customer calls your competitor. It happens more than you think — and you never even know it. We fix that.</p>
+        <div class="op-stats">
+          <div>
+            <div class="op-stat-num">62%</div>
+            <div class="op-stat-label">of callers won't leave a voicemail</div>
+          </div>
+          <div>
+            <div class="op-stat-num">&lt;60s</div>
+            <div class="op-stat-label">our average text-back time</div>
+          </div>
+          <div>
+            <div class="op-stat-num">3–5</div>
+            <div class="op-stat-label">jobs recovered per month, avg</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How it works -->
+      <div class="op-section">
+        <div class="op-section-tag">How it works</div>
+        <h3 class="op-section-title">A missed call used to mean<br>a lost customer. Not anymore.</h3>
+        <div class="op-phone-flow">
+
+          <div class="op-phone">
+            <div class="op-phone-notch"><div class="op-phone-notch-pill"></div></div>
+            <div class="op-phone-screen">
+              <div class="op-phone-time">10:14 AM</div>
+              <div class="op-notif">
+                <div class="op-notif-icon" style="background:#EF4444;">📵</div>
+                <div>
+                  <div class="op-notif-app">Phone</div>
+                  <div class="op-notif-title">Missed call</div>
+                  <div class="op-notif-body">+1 (417) 555-0182</div>
+                </div>
+              </div>
+              <div style="background: white; border-radius: 12px; padding: 8px 10px; margin-bottom: 7px; box-shadow: 0 2px 6px rgba(0,0,0,.08);">
+                <div style="font-size: 9px; color: #888; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; font-family: 'Inter', sans-serif;">AI Automation</div>
+                <div style="font-size: 11px; color: #111; font-weight: 600; font-family: 'Inter', sans-serif;">Auto-reply sent ✓</div>
+                <div style="font-size: 10px; color: #555; font-family: 'Inter', sans-serif; margin-top: 2px;">"Hey, we just missed your call..."</div>
+              </div>
+              <div class="op-stats-box">
+                <div class="op-stats-box-label">📊 This week</div>
+                <div class="op-stats-row-item"><span style="color:#555;">Missed calls</span><span style="color:#111;font-weight:600;">11</span></div>
+                <div class="op-stats-row-item"><span style="color:#555;">Auto-replied</span><span style="color:#22C55E;font-weight:600;">11 ✓</span></div>
+                <div class="op-stats-row-item"><span style="color:#555;">Booked jobs</span><span style="color:#22C55E;font-weight:600;">3 🔥</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="op-connector">
+            <div class="op-conn-dot"></div>
+            <div class="op-conn-line"></div>
+            <div class="op-conn-label">Auto-reply</div>
+            <div class="op-conn-line"></div>
+            <div class="op-conn-dot"></div>
+          </div>
+
+          <div class="op-phone">
+            <div class="op-phone-notch"><div class="op-phone-notch-pill"></div></div>
+            <div class="op-sms-screen">
+              <div class="op-sms-header">📱 Text Message · 10:14 AM</div>
+              <div style="display:flex;justify-content:flex-end;"><div class="op-bubble out">Hey! Sorry we just missed your call — what can we help you with today? 👍</div></div>
+              <div class="op-bubble-time">Delivered · 10:14 AM</div>
+              <div class="op-bubble in">Hi yeah I've been trying to get a quote all week</div>
+              <div style="height:5px;"></div>
+              <div style="display:flex;justify-content:flex-end;"><div class="op-bubble out">Happy to help right now — tell me a little about what you need?</div></div>
+              <div style="height:5px;"></div>
+              <div class="op-bubble in">Sure — [describes job]. How soon can you get me in?</div>
+              <div style="height:5px;"></div>
+              <div style="display:flex;justify-content:flex-end;"><div class="op-bubble out">Let me get you scheduled — what days work this week? ✅</div></div>
+              <div style="height:5px;"></div>
+              <div class="op-bubble in">Thursday works! Thanks for responding lol</div>
+            </div>
+          </div>
+
+          <div class="op-connector">
+            <div class="op-conn-dot"></div>
+            <div class="op-conn-line"></div>
+            <div class="op-conn-label">Booked</div>
+            <div class="op-conn-line"></div>
+            <div class="op-conn-dot"></div>
+          </div>
+
+          <div class="op-flow-result">
+            <div class="op-flow-result-icon">💰</div>
+            <div class="op-flow-result-title">Customer booked.<br>You didn't lift a finger.</div>
+            <div class="op-flow-result-body">That customer would've called your competitor two minutes later. Instead, they're on your schedule. <strong>Runs 24/7 — even when you're heads-down in the work.</strong></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Before / After -->
+      <div class="op-section">
+        <div class="op-section-tag">The reality</div>
+        <h3 class="op-section-title">Before vs. after</h3>
+        <div class="op-ba-grid">
+          <div class="op-ba-col">
+            <span class="op-ba-label before-l">❌ Without automation</span>
+            <div class="op-ba-item"><span class="op-ba-icon">📵</span>Missed calls go to voicemail. Most customers hang up and call someone else.</div>
+            <div class="op-ba-item"><span class="op-ba-icon">📋</span>Quotes sit unanswered for days. No follow-up. Customer moves on.</div>
+            <div class="op-ba-item"><span class="op-ba-icon">⭐</span>Happy customers forget to leave a review. Unhappy ones never do.</div>
+            <div class="op-ba-item"><span class="op-ba-icon">📅</span>You remind customers manually — or they no-show last minute.</div>
+            <div class="op-ba-item"><span class="op-ba-icon">🌙</span>After-hours inquiries sit until morning. Customer's gone by then.</div>
+          </div>
+          <div class="op-ba-col after">
+            <span class="op-ba-label after-l">✅ With automation</span>
+            <div class="op-ba-item"><span class="op-ba-icon">💬</span>Every missed call gets a text back in under 60 seconds. You keep the lead.</div>
+            <div class="op-ba-item"><span class="op-ba-icon">🔁</span>Quotes get an automated follow-up at 3, 7, and 14 days. More closes, less chasing.</div>
+            <div class="op-ba-item"><span class="op-ba-icon">⭐</span>Every closed job triggers a review request. Your Google rating climbs on autopilot.</div>
+            <div class="op-ba-item"><span class="op-ba-icon">🔔</span>Customers get automated reminders 24hrs and 1hr out. No-shows drop significantly.</div>
+            <div class="op-ba-item"><span class="op-ba-icon">🤖</span>AI handles after-hours questions and captures contact info while you sleep.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Services -->
+      <div class="op-section" style="border-bottom: none;">
+        <div class="op-section-tag">What you get</div>
+        <h3 class="op-section-title">Four automations.<br>One less headache.</h3>
+        <div class="op-services-grid">
+          <div class="op-service-card">
+            <div class="op-service-num">01</div>
+            <div class="op-service-icon">📵</div>
+            <div class="op-service-title">Missed call text-back</div>
+            <div class="op-service-desc">Customer calls and you can't answer — they get a text in under 60 seconds so you stay in the conversation instead of losing it.</div>
+            <span class="op-service-tag">Most popular</span>
+          </div>
+          <div class="op-service-card">
+            <div class="op-service-num">02</div>
+            <div class="op-service-icon">📋</div>
+            <div class="op-service-title">Quote follow-up</div>
+            <div class="op-service-desc">Sent a quote and never heard back? Automated follow-ups go out at 3, 7, and 14 days. More yeses without the awkward chase.</div>
+            <span class="op-service-tag">Big revenue driver</span>
+          </div>
+          <div class="op-service-card">
+            <div class="op-service-num">03</div>
+            <div class="op-service-icon">⭐</div>
+            <div class="op-service-title">Review requests</div>
+            <div class="op-service-desc">Job closes → customer gets a text asking for a Google review. Simple, automated, and your rating starts climbing without you asking.</div>
+            <span class="op-service-tag">Builds trust fast</span>
+          </div>
+          <div class="op-service-card">
+            <div class="op-service-num">04</div>
+            <div class="op-service-icon">🔔</div>
+            <div class="op-service-title">Appointment reminders</div>
+            <div class="op-service-desc">Automated reminders 24hrs and 1hr before every appointment. Fewer no-shows, fewer wasted hours, less back-and-forth.</div>
+            <span class="op-service-tag">Saves real time</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Upload zone for own flyers -->
+    <div class="section-label" style="margin-top: 48px;">Your work</div>
+    <h2 class="section-h2" style="font-size: 22px;">Your flyers & examples</h2>
+    <p style="font-size: 15px; color: var(--steel); margin-bottom: 20px;">Upload your own flyers, screenshots, and client work below to add them to this gallery.</p>
+
+    <div class="upload-zone">
+      <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <p style="font-weight: 600; color: var(--steel);">Upload your work samples here</p>
+      <p style="font-size: 13px; margin-bottom: 8px; color: var(--steel-light);">PNG, JPG, PDF up to 20MB · Drag and drop or click to browse</p>
+      <span>Your uploads will appear as gallery cards above this zone</span>
+    </div>
+
+  </section>
+
+  <section style="padding-top: 0;">
+    <div class="cta-strip">
+      <h2>Want results like these for your business?</h2>
+      <p>Let's talk. A free assessment takes 20 minutes and shows you exactly what's possible.</p>
+      <button class="btn btn-primary" onclick="showPage('contact')">Book a Free Assessment →</button>
+    </div>
+  </section>
+  <div style="height: 40px;"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: ABOUT
+══════════════════════════════════════════════════ -->
+<div id="page-about" class="page">
+
+  <div class="hero" style="padding: 72px 32px 64px;">
+    <div class="hero-badge">About Us</div>
+    <h1 style="font-size: clamp(28px, 4vw, 42px);">We make AI work<br><span>for the little guy</span></h1>
+    <p class="hero-sub">SEK Automation Group was built for small businesses — not Fortune 500 companies. We believe powerful technology should be accessible to everyone.</p>
+  </div>
+
+  <section>
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-tagline">Automate <span>Today.</span><br>Elevate Tomorrow.</div>
+        <div class="about-divider"></div>
+        <div class="about-slogan">SEK Automation Group</div>
+      </div>
+      <div class="about-content">
+        <div class="section-label">Our Story</div>
+        <h2 class="section-h2">Built for small businesses, by people who get it</h2>
+        <p>We started SEK Automation Group because we kept watching talented small business owners burn out doing work that a well-configured AI system could handle in seconds. Scheduling, follow-ups, customer questions, marketing materials — all of it stealing time from the things that actually matter.</p>
+        <p>Big companies have entire teams managing their automation. Small businesses deserve the same advantage without the enterprise price tag or the learning curve. That's what we provide.</p>
+        <p>Every solution we build is done-for-you, explained in plain English, and designed to run without you needing to become a tech expert.</p>
+        <ul class="value-list">
+          <li><span class="value-dot"></span>Accessible — no jargon, no tech degree required</li>
+          <li><span class="value-dot"></span>Affordable — priced for small business budgets</li>
+          <li><span class="value-dot"></span>Accountable — we don't disappear after setup</li>
+          <li><span class="value-dot"></span>Results-driven — we measure success by your time and revenue saved</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="how-bg">
+    <div class="how-inner">
+      <div class="section-label" style="color:#7EB8FF;">Our values</div>
+      <h2 class="section-h2" style="color:white; margin-bottom: 8px;">What we stand for</h2>
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="how-num" style="font-size: 28px;">Simple</div>
+          <h3>No tech speak</h3>
+          <p>We explain everything in plain language. If you can use a smartphone, you can use what we build.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-num" style="font-size: 28px;">Done-for-you</div>
+          <h3>We do the work</h3>
+          <p>You don't need to learn any software. We handle setup, configuration, testing, and training.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-num" style="font-size: 28px;">Affordable</div>
+          <h3>Small biz pricing</h3>
+          <p>Powerful AI automation shouldn't cost a fortune. We price for real small business budgets.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding-top: 64px; padding-bottom: 0;">
+    <div class="cta-strip">
+      <h2>Let's build something together</h2>
+      <p>A 20-minute free assessment is all it takes to find out where AI can change your business.</p>
+      <button class="btn btn-primary" onclick="showPage('contact')">Get My Free Assessment →</button>
+    </div>
+  </section>
+  <div style="height: 80px;"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: CONTACT
+══════════════════════════════════════════════════ -->
+<div id="page-contact" class="page">
+
+  <div class="hero" style="padding: 72px 32px 64px;">
+    <div class="hero-badge">Free Assessment</div>
+    <h1 style="font-size: clamp(28px, 4vw, 42px);">Let's find out where<br><span>AI can help you most</span></h1>
+    <p class="hero-sub">Tell us a little about your business. We'll review it and come back with specific, honest recommendations — no sales pressure, no fluff.</p>
+  </div>
+
+  <section>
+    <div class="contact-grid">
+
+      <div class="contact-info">
+        <div class="section-label">Get in touch</div>
+        <h2 class="section-h2">We'd love to hear from you</h2>
+        <p>Fill out the form and we'll be in touch within 24 hours. Prefer to talk right away? Reach out on social and we'll respond fast.</p>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <span>contact@sekautomationgroup.com</span>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <span>Available for calls Mon–Fri, 9am–6pm</span>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <span>Serving small businesses nationwide</span>
+        </div>
+
+        <div class="lead-magnet">
+          <div class="lead-magnet-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div class="lead-magnet-text">
+            <h3>Free: Small Business AI Starter Checklist</h3>
+            <p>10 ways AI can save your business 10+ hours a week — instant PDF download</p>
+          </div>
+          <a class="lead-magnet-btn" href="SEK-AI-Starter-Checklist.pdf" download="SEK-AI-Starter-Checklist.pdf" style="text-decoration:none;">Download Free →</a>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap">
+        <div id="contact-form-inner">
+          <p class="form-title">Get your free AI assessment</p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First name</label>
+              <input type="text" id="fname" placeholder="Jane">
+            </div>
+            <div class="form-group">
+              <label for="lname">Last name</label>
+              <input type="text" id="lname" placeholder="Smith">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" placeholder="jane@yourbusiness.com">
+          </div>
+
+          <div class="form-group">
+            <label for="biz-type">Type of business</label>
+            <select id="biz-type">
+              <option value="">Select your industry...</option>
+              <option>Retail / E-commerce</option>
+              <option>Restaurant / Food service</option>
+              <option>Home services (cleaning, HVAC, plumbing, etc.)</option>
+              <option>Health & wellness</option>
+              <option>Real estate</option>
+              <option>Professional services</option>
+              <option>Beauty & salon</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="challenge">What's your biggest challenge right now?</label>
+            <textarea id="challenge" placeholder="E.g. I spend too much time answering the same customer questions, I'm not following up with leads fast enough, I need help with marketing..."></textarea>
+          </div>
+
+          <button class="form-submit" onclick="submitForm()">Send My Assessment Request →</button>
+          <p class="form-note">We respond within 24 hours. No spam, ever. Your info stays private.</p>
+        </div>
+
+        <div class="form-success" id="form-success">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <h3>You're all set!</h3>
+          <p>We've received your request and will be in touch within 24 hours with honest, specific recommendations for your business.</p>
+          <p style="margin-top: 12px; font-size: 13px; color: var(--steel-light);">While you wait — download your free AI Starter Checklist below.</p>
+          <a class="btn btn-primary" href="SEK-AI-Starter-Checklist.pdf" download="SEK-AI-Starter-Checklist.pdf" style="margin-top:20px; text-decoration:none;">Download Free Checklist →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div style="height: 40px;"></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-wrap" style="text-decoration:none; cursor:pointer;" onclick="showPage('home')">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+        </div>
+        <div>
+          <div class="logo-text">SEK <span>Automation</span> Group</div>
+          <span class="logo-sub">Automate Today. Elevate Tomorrow.</span>
+        </div>
+      </div>
+      <div class="footer-tagline" style="margin-top:14px;">AI Solutions for Small Business</div>
+    </div>
+    <div class="footer-links">
+      <h4>Pages</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('services')">Services</a>
+      <a onclick="showPage('work')">Our Work</a>
+      <a onclick="showPage('about')">About</a>
+      <a onclick="showPage('contact')">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
+    </div>
+    <div class="footer-links">
+      <h4>Services</h4>
+      <a onclick="showPage('services')">AI Customer Service</a>
+      <a onclick="showPage('services')">Workflow Automation</a>
+      <a onclick="showPage('services')">AI Marketing Materials</a>
+      <a onclick="showPage('services')">Lead Generation</a>
+    </div>
+    <div class="footer-links">
+      <h4>Get started</h4>
+      <a onclick="showPage('contact')">Free Assessment</a>
+      <a onclick="showPage('contact')">Download Free Checklist</a>
+      <a onclick="showPage('contact')">Contact Us</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 SEK Automation Group. All rights reserved.</span>
+    <span class="footer-slogan">Automate Today. Elevate Tomorrow.</span>
+  </div>
+</footer>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function submitForm() {
+    const email = document.getElementById('email').value;
+    const fname = document.getElementById('fname').value;
+    const lname = document.getElementById('lname').value;
+    const bizType = document.getElementById('biz-type').value;
+    const challenge = document.getElementById('challenge').value;
+    if (!fname || !email) {
+      alert('Please fill in your name and email to continue.');
+      return;
+    }
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const res = await fetch('https://formspree.io/f/xzdqvrpk', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: fname + ' ' + lname,
+          email: email,
+          business_type: bizType,
+          challenge: challenge
+        })
+      });
+      if (res.ok) {
+        document.getElementById('contact-form-inner').style.display = 'none';
+        document.getElementById('form-success').classList.add('show');
+      } else {
+        alert('Something went wrong. Please try again or email us directly.');
+        btn.textContent = 'Send My Assessment Request →';
+        btn.disabled = false;
+      }
+    } catch(e) {
+      alert('Something went wrong. Please check your connection and try again.');
+      btn.textContent = 'Send My Assessment Request →';
+      btn.disabled = false;
+    }
+  }
+</script>
+
+
+
+<!-- ══════════════════════════════════════════════════
+     SEK AI CHATBOT — lives outside all .page divs
+══════════════════════════════════════════════════ -->
+<style>
+#sek-launcher{position:fixed;bottom:28px;right:28px;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#0D1B4B,#1A6FE8);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(26,111,232,0.55);z-index:99999;transition:transform 0.2s,box-shadow 0.2s;}
+#sek-launcher:hover{transform:scale(1.08);box-shadow:0 6px 32px rgba(26,111,232,0.75);}
+#sek-launcher svg{width:28px;height:28px;pointer-events:none;}
+#sek-ci{display:block;}#sek-xi{display:none;}
+#sek-launcher.sek-open #sek-ci{display:none;}
+#sek-launcher.sek-open #sek-xi{display:block;}
+
+#sek-notif{position:fixed;bottom:102px;right:28px;background:linear-gradient(135deg,#0D1B4B,#1A6FE8);color:#fff;font-size:13px;font-weight:500;padding:9px 15px;border-radius:22px;box-shadow:0 4px 16px rgba(0,0,0,0.35);z-index:99998;white-space:nowrap;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;animation:sekSU 0.4s ease;}
+#sek-notif::after{content:'';position:absolute;bottom:-6px;right:22px;width:12px;height:12px;background:#1A6FE8;clip-path:polygon(0 0,100% 0,50% 100%);}
+@keyframes sekSU{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+#sek-win{position:fixed;bottom:102px;right:28px;width:360px;height:540px;background:#080f20;border:1px solid rgba(26,111,232,0.3);border-radius:20px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.7);z-index:99997;transform-origin:bottom right;transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),opacity 0.2s;}
+#sek-win.sek-off{transform:scale(0.82);opacity:0;pointer-events:none;}
+
+.sw-hdr{background:linear-gradient(135deg,#0D1B4B,#122060);padding:14px 18px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(26,111,232,0.18);flex-shrink:0;}
+.sw-av{width:38px;height:38px;background:linear-gradient(135deg,#0D1B4B,#1A6FE8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;border:1.5px solid rgba(26,111,232,0.4);}
+.sw-ht{font-size:14px;font-weight:600;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;}
+.sw-hs{font-size:11px;color:#7EB8FF;margin-top:1px;font-family:'Inter',sans-serif;}
+.sw-dot{width:7px;height:7px;background:#22c55e;border-radius:50%;display:inline-block;margin-right:4px;animation:swp 2s infinite;}
+@keyframes swp{0%,100%{opacity:1}50%{opacity:0.4}}
+
+.sw-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;}
+.sw-msgs::-webkit-scrollbar{width:3px;}
+.sw-msgs::-webkit-scrollbar-thumb{background:rgba(26,111,232,0.3);border-radius:2px;}
+
+.sw-m{display:flex;gap:7px;max-width:90%;animation:swfi 0.2s ease;}
+@keyframes swfi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.sw-m.bot{align-self:flex-start;}
+.sw-m.usr{align-self:flex-end;flex-direction:row-reverse;}
+.sw-mav{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#0D1B4B,#1A6FE8);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px;}
+.sw-b{padding:9px 13px;border-radius:15px;font-size:13px;line-height:1.5;font-family:'Inter',sans-serif;}
+.sw-m.bot .sw-b{background:#0c1a38;color:#d8e8ff;border-bottom-left-radius:3px;border:1px solid rgba(26,111,232,0.13);}
+.sw-m.usr .sw-b{background:linear-gradient(135deg,#0D1B4B,#1A6FE8);color:#fff;border-bottom-right-radius:3px;}
+
+.sw-td{display:flex;gap:4px;padding:3px 0;}
+.sw-td span{width:6px;height:6px;background:#1A6FE8;border-radius:50%;animation:swb 1.2s infinite;}
+.sw-td span:nth-child(2){animation-delay:0.2s;}
+.sw-td span:nth-child(3){animation-delay:0.4s;}
+@keyframes swb{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+
+.sw-qrs{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px;}
+.sw-qr{background:rgba(26,111,232,0.1);border:1px solid rgba(26,111,232,0.3);color:#7EB8FF;padding:5px 11px;border-radius:18px;font-size:11px;cursor:pointer;transition:all 0.15s;white-space:nowrap;font-family:'Inter',sans-serif;}
+.sw-qr:hover{background:rgba(26,111,232,0.25);color:#fff;}
+
+.sw-lf{display:flex;flex-direction:column;gap:7px;margin-top:3px;}
+.sw-lf input{background:#0c1a38;border:1px solid rgba(26,111,232,0.25);color:#fff;padding:8px 11px;border-radius:9px;font-size:12px;outline:none;font-family:'Inter',sans-serif;}
+.sw-lf input::placeholder{color:#2a4070;}
+.sw-lf input:focus{border-color:#1A6FE8;}
+.sw-lf button{background:linear-gradient(135deg,#0D1B4B,#1A6FE8);color:#fff;border:none;padding:9px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
+
+.sw-inp{padding:10px 14px 14px;border-top:1px solid rgba(26,111,232,0.1);display:flex;gap:7px;flex-shrink:0;background:#080f20;}
+#sek-txt{flex:1;background:#0c1a38;border:1px solid rgba(26,111,232,0.2);color:#fff;padding:9px 13px;border-radius:22px;font-size:13px;outline:none;resize:none;font-family:'Inter',sans-serif;transition:border-color 0.2s;}
+#sek-txt::placeholder{color:#2a4070;}
+#sek-txt:focus{border-color:#1A6FE8;}
+#sek-btn{width:38px;height:38px;background:linear-gradient(135deg,#0D1B4B,#1A6FE8);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;align-self:flex-end;transition:transform 0.15s,opacity 0.15s;}
+#sek-btn:hover{transform:scale(1.08);}
+#sek-btn:disabled{opacity:0.35;cursor:default;transform:none;}
+.sw-ft{text-align:center;font-size:10px;color:#1a3060;padding:0 14px 8px;flex-shrink:0;font-family:'Inter',sans-serif;}
+.sw-ft a{color:#1A6FE8;text-decoration:none;}
+@media(max-width:420px){#sek-win{width:calc(100vw - 16px);right:8px;}}
+</style>
+
+<!-- Launcher -->
+<button id="sek-launcher" aria-label="Open chat" onclick="swToggle()">
+  <svg id="sek-ci" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <svg id="sek-xi" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+</button>
+
+<!-- Notification bubble (shown on load, auto-hides) -->
+<div id="sek-notif" onclick="swOpen()">👋 Got questions about AI automation?</div>
+
+<!-- Chat window -->
+<div id="sek-win" class="sek-off">
+  <div class="sw-hdr">
+    <div class="sw-av">⚡</div>
+    <div>
+      <div class="sw-ht">SEK Assistant</div>
+      <div class="sw-hs"><span class="sw-dot"></span>AI-powered · Always on</div>
+    </div>
+  </div>
+  <div class="sw-msgs" id="sw-msgs"></div>
+  <div class="sw-inp">
+    <textarea id="sek-txt" rows="1" placeholder="Ask me anything…" onkeydown="swKey(event)"></textarea>
+    <button id="sek-btn" onclick="swSend()" aria-label="Send">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+  <div class="sw-ft">Powered by <a href="https://sekautomationgroup.netlify.app" target="_blank">SEK Automation Group</a></div>
+</div>
+
+<script>
+(function(){
+  var SW_FS  = 'https://formspree.io/f/xzdqvrpk';
+
+  var swHist=[], swBusy=false, swStarted=false, swLead=false, swLog=[];
+
+  var SYSTEM = 'You are the friendly AI assistant for SEK Automation Group. You help small business owners understand how AI automation can save them time and money.\n\nABOUT SEK AUTOMATION GROUP:\n- Done-for-you AI automation for small businesses — no tech skills needed\n- Services: AI Customer Service Chatbot, Workflow Automation, AI Marketing Materials, AI Lead Generation\n- Save 10+ hours/week, setup in 48 hours, works 24/7\n- Pricing discussed during free assessment\n- Contact: contact@sekautomationgroup.com\n- Free AI Assessment (20 min) + Free AI Starter Checklist PDF\n\nSERVICES:\n1. AI Chatbot — 24/7 responses, books appointments, captures leads, under 3s response\n2. Workflow Automation — invoicing, reminders, follow-ups, saves 5-15 hrs/week\n3. AI Marketing — flyers, social posts, email campaigns, fraction of agency cost\n4. Lead Generation — automated email+SMS follow-up, lead capture, CRM integration\n\nMISSED CALL TEXT-BACK: Customer calls, you miss it, they get a text in 60 seconds. Recovers 3-5 jobs/month on average.\n\nYOUR JOB:\n- Answer questions helpfully and concisely (max 3 short paragraphs)\n- Capture name+email+business when someone wants more info\n- Encourage free assessment booking\n- Never invent pricing numbers\n- Tone: friendly, plain English, no jargon\n- If asked about pricing say exact numbers come from the free assessment';
+
+  // Auto-open chat after 3 seconds
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      swOpen();
+    }, 3000);
+    // Hide notif after 8s
+    setTimeout(function(){
+      var n=document.getElementById('sek-notif');
+      if(n){n.style.opacity='0';n.style.transition='opacity 0.4s';setTimeout(function(){n.remove();},400);}
+    }, 8000);
+  });
+
+  window.swToggle = function(){
+    var win=document.getElementById('sek-win');
+    var btn=document.getElementById('sek-launcher');
+    var notif=document.getElementById('sek-notif');
+    if(notif) notif.remove();
+    if(win.classList.contains('sek-off')){
+      win.classList.remove('sek-off');
+      btn.classList.add('sek-open');
+      if(!swStarted){swStarted=true;swInit();}
+      setTimeout(function(){var t=document.getElementById('sek-txt');if(t)t.focus();},300);
+    } else {
+      win.classList.add('sek-off');
+      btn.classList.remove('sek-open');
+    }
+  };
+
+  window.swOpen = function(){
+    var win=document.getElementById('sek-win');
+    if(win && win.classList.contains('sek-off')) swToggle();
+  };
+
+  function swInit(){
+    swBot("Hey there! \uD83D\uDC4B I'm SEK's AI assistant. I can answer questions about our automation services, explain pricing, or help figure out which solution fits your business.\n\nWhat brings you here today?",
+      ["What services do you offer?","How much does it cost?","I'm missing calls","Book a free assessment"]);
+  }
+
+  function swBot(txt, qrs){
+    qrs = qrs||[];
+    var msgs=document.getElementById('sw-msgs');
+    var d=document.createElement('div');
+    d.className='sw-m bot';
+    d.innerHTML='<div class="sw-mav">\u26A1</div><div><div class="sw-b">'+swFmt(txt)+'</div>'+
+      (qrs.length?'<div class="sw-qrs">'+qrs.map(function(q){return '<button class="sw-qr" onclick="swQR(this,\''+swE(q)+'\')">'+q+'</button>';}).join('')+'</div>':'')+'</div>';
+    msgs.appendChild(d);
+    swScroll();
+  }
+
+  function swUsr(txt){
+    var msgs=document.getElementById('sw-msgs');
+    var d=document.createElement('div');
+    d.className='sw-m usr';
+    d.innerHTML='<div class="sw-b">'+swE(txt)+'</div>';
+    msgs.appendChild(d);
+    swScroll();
+  }
+
+  function swTyping(){
+    var msgs=document.getElementById('sw-msgs');
+    var d=document.createElement('div');
+    d.className='sw-m bot'; d.id='sw-typing';
+    d.innerHTML='<div class="sw-mav">\u26A1</div><div class="sw-b"><div class="sw-td"><span></span><span></span><span></span></div></div>';
+    msgs.appendChild(d); swScroll();
+  }
+  function swNoTyping(){var t=document.getElementById('sw-typing');if(t)t.remove();}
+
+  function swLeadForm(){
+    if(swLead) return;
+    var msgs=document.getElementById('sw-msgs');
+    var d=document.createElement('div');
+    d.className='sw-m bot';
+    d.innerHTML='<div class="sw-mav">\u26A1</div><div><div class="sw-b">To get you the most helpful info, can I grab your name, email, and business type? \uD83D\uDC47</div>'+
+      '<div class="sw-lf" id="sw-lf">'+
+      '<input type="text" id="sw-nm" placeholder="Your name"/>'+
+      '<input type="email" id="sw-em" placeholder="Email address"/>'+
+      '<input type="text" id="sw-bz" placeholder="Type of business (e.g. salon, plumber)"/>'+
+      '<button onclick="swSubmit()">Send my details \u2192</button></div></div>';
+    msgs.appendChild(d); swScroll();
+  }
+
+  window.swSubmit = async function(){
+    var nm=document.getElementById('sw-nm').value.trim();
+    var em=document.getElementById('sw-em').value.trim();
+    var bz=document.getElementById('sw-bz').value.trim();
+    if(!nm||!em){alert('Please enter your name and email.');return;}
+    swLead=true;
+    document.getElementById('sw-lf').innerHTML='<p style="color:#7EB8FF;font-size:12px;padding:4px">Sending\u2026 \u2713</p>';
+    var transcript=swLog.map(function(m){return '['+m.r.toUpperCase()+']: '+m.t;}).join('\n');
+    try{
+      await fetch(SW_FS,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify({
+          _subject:'New Chat Lead: '+nm+' \u2014 '+(bz||'Unknown Business'),
+          name:nm, email:em, business_type:bz||'Not specified',
+          source:'SEK Website Chatbot',
+          chat_transcript:transcript||'No prior messages'
+        })
+      });
+    }catch(e){}
+    document.getElementById('sw-lf').remove();
+    swBot('Got it, '+nm+'! \uD83D\uDE4C We\'ll be in touch at '+em+' within 24 hours.\n\nIn the meantime, grab our free checklist:\n\uD83D\uDC49 <a href="SEK-AI-Starter-Checklist.pdf" target="_blank" style="color:#7EB8FF">Download Free AI Checklist</a>',
+      ["Book my free assessment","Tell me more about chatbots"]);
+  };
+
+  window.swQR = function(btn,txt){
+    btn.closest('.sw-qrs').querySelectorAll('.sw-qr').forEach(function(b){b.disabled=true;});
+    swUsr(txt); swProcess(txt);
+  };
+
+  window.swKey = function(e){
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();swSend();}
+  };
+
+  window.swSend = function(){
+    var inp=document.getElementById('sek-txt');
+    var txt=inp.value.trim();
+    if(!txt||swBusy)return;
+    inp.value=''; inp.style.height='auto';
+    swUsr(txt); swProcess(txt);
+  };
+
+  async function swProcess(txt){
+    swBusy=true;
+    document.getElementById('sek-btn').disabled=true;
+    swHist.push({role:'user',content:txt});
+    swLog.push({r:'visitor',t:txt});
+    swTyping();
+    if(swHist.filter(function(m){return m.role==='user';}).length===2&&!swLead){
+      setTimeout(function(){if(!swLead)swLeadForm();},3500);
+    }
+    try{
+      var res=await fetch('https://sek-chat-proxy.sekautomationgroup.workers.dev/',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:400,system:SYSTEM,messages:swHist})
+      });
+      var data=await res.json();
+      if(data.error){
+        swNoTyping();
+        swBot('API Error: '+data.error.type+' — '+data.error.message,[]);
+        swBusy=false;
+        document.getElementById('sek-btn').disabled=false;
+        return;
+      }
+      var reply=data.content&&data.content[0]&&data.content[0].text?data.content[0].text:'Sorry, I hit a snag. Email us at contact@sekautomationgroup.com';
+      swHist.push({role:'assistant',content:reply});
+      swLog.push({r:'assistant',t:reply});
+      swNoTyping();
+      swBot(reply, swQRs(txt,reply));
+    }catch(e){
+      swNoTyping();
+      swBot('Connection error: '+e.message,[]);
+    }
+    swBusy=false;
+    document.getElementById('sek-btn').disabled=false;
+  }
+
+  function swQRs(u,b){
+    u=u.toLowerCase(); b=b.toLowerCase();
+    if(u.indexOf('price')>-1||u.indexOf('cost')>-1||b.indexOf('assessment')>-1) return ['Book my free assessment','What\'s included?'];
+    if(u.indexOf('chatbot')>-1||u.indexOf('customer')>-1) return ['How does it book appointments?','How much does it cost?'];
+    if(u.indexOf('miss')>-1||u.indexOf('call')>-1) return ['Tell me more','How fast does it respond?','Get this set up'];
+    if(swHist.length>4) return ['Book my free assessment \u2192','Send me the checklist'];
+    return [];
+  }
+
+  function swFmt(t){
+    return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/&lt;a /g,'<a ').replace(/&lt;\/a&gt;/g,'</a>')
+      .replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  }
+  function swE(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function swScroll(){var m=document.getElementById('sw-msgs');if(m)setTimeout(function(){m.scrollTop=m.scrollHeight;},50);}
+
+  // Auto-resize textarea
+  document.addEventListener('DOMContentLoaded',function(){
+    var ta=document.getElementById('sek-txt');
+    if(ta){ta.addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px';});}
+  });
+})();
+</script>
+<!-- ══════════════════════════════════════════════════ -->
+
+</body>
+</html>

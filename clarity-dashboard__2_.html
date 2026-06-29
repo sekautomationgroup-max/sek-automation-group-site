@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clarity — Business Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1117;--surface:#16181f;--surface2:#1e2029;--card:#1a1c24;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#e8eaf0;--muted:#6b7280;--dim:#9ca3af;
+  --accent:#3b82f6;--green:#22c55e;--red:#ef4444;--amber:#f59e0b;--cyan:#06b6d4;
+}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;min-height:100vh;display:flex;}
+
+/* SIDEBAR */
+.sidebar{width:220px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;}
+.logo-area{padding:20px;border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;}
+.logo-icon{width:30px;height:30px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;}
+.client-section{padding:14px 20px;border-bottom:1px solid var(--border);}
+.client-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.client-name{font-size:13px;font-weight:500;}
+nav{padding:12px 10px;flex:1;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--muted);cursor:pointer;transition:all .15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;}
+.nav-item:hover{background:var(--surface2);color:var(--text);}
+.nav-item.active{background:rgba(59,130,246,.15);color:var(--accent);}
+.nav-icon{font-size:15px;width:18px;text-align:center;}
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);line-height:1.6;}
+.live-dot{display:inline-block;width:6px;height:6px;background:var(--green);border-radius:50%;margin-right:5px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* MAIN */
+.main{margin-left:220px;flex:1;padding:28px 32px;min-height:100vh;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;}
+.page-title{font-size:20px;font-weight:600;letter-spacing:-.02em;}
+.page-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+.range-tabs{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:3px;gap:2px;}
+.range-tab{padding:5px 12px;border-radius:6px;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:none;transition:all .15s;}
+.range-tab.active{background:var(--surface2);color:var(--text);}
+
+/* ALERT */
+.alert{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--amber);margin-bottom:20px;}
+
+/* STAT CARDS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.stat-card.blue::before{background:var(--accent);}
+.stat-card.green::before{background:var(--green);}
+.stat-card.amber::before{background:var(--amber);}
+.stat-card.cyan::before{background:var(--cyan);}
+.stat-card.red::before{background:var(--red);}
+.stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+.stat-val{font-size:26px;font-weight:600;letter-spacing:-.03em;line-height:1;margin-bottom:6px;}
+.stat-delta{font-size:11px;display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:20px;font-weight:500;}
+.stat-delta.up{background:rgba(34,197,94,.12);color:var(--green);}
+.stat-delta.down{background:rgba(239,68,68,.12);color:var(--red);}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:5px;}
+
+/* CHART CARDS */
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:16px;}
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;}
+.card-title{font-size:14px;font-weight:600;}
+.card-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.card-badge{font-size:11px;padding:3px 8px;border-radius:6px;font-weight:500;background:rgba(59,130,246,.12);color:var(--accent);}
+.card-badge.green{background:rgba(34,197,94,.12);color:var(--green);}
+.card-badge.amber{background:rgba(245,158,11,.12);color:var(--amber);}
+.two-col{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;}
+.two-equal{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+
+/* SECTION TABS */
+.section-tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:18px;}
+.stab{padding:8px 16px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;}
+.stab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.stab:hover:not(.active){color:var(--text);}
+.subtab-panel{display:none;}
+.subtab-panel.active{display:block;}
+
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;}
+.data-table th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;padding:0 0 10px;text-align:left;border-bottom:1px solid var(--border);}
+.data-table td{padding:10px 0;font-size:13px;border-bottom:1px solid var(--border);}
+.data-table tr:last-child td{border-bottom:none;}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;}
+
+/* PROGRESS */
+.prog-item{margin-bottom:14px;}
+.prog-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;color:var(--muted);}
+.prog-label span:last-child{color:var(--text);font-weight:500;}
+.prog-bar{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:3px;}
+
+/* CUSTOMER LIST */
+.cust-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.cust-item:last-child{border-bottom:none;}
+.cust-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;}
+.cust-val{font-size:13px;font-weight:600;margin-left:auto;}
+.cust-status{font-size:10px;margin-top:2px;text-align:right;}
+
+/* INVENTORY */
+.inv-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.inv-item:last-child{border-bottom:none;}
+.inv-badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;white-space:nowrap;}
+.inv-badge.ok{background:rgba(34,197,94,.12);color:var(--green);}
+.inv-badge.low{background:rgba(245,158,11,.15);color:var(--amber);}
+.inv-badge.reorder{background:rgba(239,68,68,.12);color:var(--red);}
+
+/* MISSED CALLS TABLE */
+.call-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.call-row:last-child{border-bottom:none;}
+.call-status{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;}
+.call-status.replied{background:rgba(34,197,94,.12);color:var(--green);}
+.call-status.missed{background:rgba(239,68,68,.12);color:var(--red);}
+
+/* WATERMARK */
+.watermark{text-align:center;padding:24px;font-size:12px;color:var(--muted);border-top:1px solid var(--border);margin-top:8px;letter-spacing:.04em;}
+.watermark strong{color:var(--accent);}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="logo-area">
+    <div class="logo">
+      <div class="logo-icon">C</div>
+      Clarity
+    </div>
+  </div>
+  <div class="client-section">
+    <div class="client-label">Client</div>
+    <div class="client-name">Demo Business — Joplin, MO</div>
+  </div>
+  <nav>
+    <button class="nav-item active" onclick="showPage('overview',this)">
+      <span class="nav-icon">▣</span> Overview
+    </button>
+    <button class="nav-item" onclick="showPage('financial',this)">
+      <span class="nav-icon">$</span> Financial
+    </button>
+    <button class="nav-item" onclick="showPage('sales',this)">
+      <span class="nav-icon">↑</span> Sales
+    </button>
+    <button class="nav-item" onclick="showPage('inventory',this)">
+      <span class="nav-icon">▤</span> Inventory
+    </button>
+    <button class="nav-item" onclick="showPage('customers',this)">
+      <span class="nav-icon">◎</span> Customers
+    </button>
+    <button class="nav-item" onclick="showPage('automation',this)">
+      <span class="nav-icon">⚡</span> Automation
+    </button>
+  </nav>
+  <div class="sidebar-footer">
+    <div><span class="live-dot"></span>Live — updates every 4hrs</div>
+    <div style="margin-top:4px;">Last sync: Today 6:02 AM</div>
+    <div style="margin-top:4px;color:#3b6;">3 sources connected</div>
+  </div>
+</aside>
+
+<main class="main">
+
+<!-- OVERVIEW PAGE -->
+<div class="page active" id="page-overview">
+  <div class="topbar">
+    <div>
+      <div class="page-title">Business overview</div>
+      <div class="page-sub">Demo Business · June 2025 · Joplin, MO</div>
+    </div>
+    <div class="range-tabs">
+      <button class="range-tab" onclick="setRange(this)">7D</button>
+      <button class="range-tab active" onclick="setRange(this)">30D</button>
+      <button class="range-tab" onclick="setRange(this)">90D</button>
+      <button class="range-tab" onclick="setRange(this)">YTD</button>
+    </div>
+  </div>
+  <div class="alert">⚠ &nbsp;<strong>2 inventory items need reorder</strong> — Check inventory tab for details.</div>
+  <div class="stats-row">
+    <div class="stat-card blue">
+      <div class="stat-label">Monthly Revenue</div>
+      <div class="stat-val">$47,820</div>
+      <span class="stat-delta up">▲ 12.4%</span>
+      <div class="stat-sub">vs. $42,540 last month</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label">Gross Margin</div>
+      <div class="stat-val">61.3%</div>
+      <span class="stat-delta up">▲ 2.1%</span>
+      <div class="stat-sub">Target: 58% — above target</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-label">Jobs Completed</div>
+      <div class="stat-val">84</div>
+      <span class="stat-delta up">▲ 9 jobs</span>
+      <div class="stat-sub">vs. 75 jobs last month</div>
+    </div>
+    <div class="stat-card cyan">
+      <div class="stat-label">Repeat Rate</div>
+      <div class="stat-val">68%</div>
+      <span class="stat-delta down">▼ 3.2%</span>
+      <div class="stat-sub">Industry avg: 55%</div>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="chart-card">
+      <div class="card-header">
+        <div><div class="card-title">Revenue vs. expenses</div><div class="card-sub">Last 6 months</div></div>
+        <span class="card-badge">+$17,280 net this month</span>
+      </div>
+      <canvas id="revenueChart" height="180"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="card-header">
+        <div><div class="card-title">Revenue by type</div><div class="card-sub">This month</div></div>
+      </div>
+      <canvas id="jobChart" height="160"></canvas>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="display:flex;align-items:center;gap:6px;color:var(--muted)"><span style="width:8px;height:8px;border-radius:2px;background:#3b82f6;display:inline-block;"></span>Service A</span><span style="font-weight:500;">$19,840 · 41%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="display:flex;align-items:center;gap:6px;color:var(--muted)"><span style="width:8px;height:8px;border-radius:2px;background:#22c55e;display:inline-block;"></span>Service B</span><span style="font-weight:500;">$16,240 · 34%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="display:flex;align-items:center;gap:6px;color:var(--muted)"><span style="width:8px;height:8px;border-radius:2px;background:#f59e0b;display:inline-block;"></span>Service C</span><span style="font-weight:500;">$7,680 · 16%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="display:flex;align-items:center;gap:6px;color:var(--muted)"><span style="width:8px;height:8px;border-radius:2px;background:#06b6d4;display:inline-block;"></span>Other</span><span style="font-weight:500;">$4,060 · 9%</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="watermark">Powered by <strong>Clarity</strong> — AI Business Intelligence · Joplin, MO · 4-State Area</div>
+</div>
+
+<!-- FINANCIAL PAGE -->
+<div class="page" id="page-financial">
+  <div class="topbar">
+    <div><div class="page-title">Financial</div><div class="page-sub">Revenue, margins & P&L</div></div>
+    <div class="range-tabs">
+      <button class="range-tab" onclick="setRange(this)">7D</button>
+      <button class="range-tab active" onclick="setRange(this)">30D</button>
+      <button class="range-tab" onclick="setRange(this)">90D</button>
+      <button class="range-tab" onclick="setRange(this)">YTD</button>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card green">
+      <div class="stat-label">Monthly Revenue</div>
+      <div class="stat-val">$47,820</div>
+      <span class="stat-delta up">▲ 12.4%</span>
+      <div class="stat-sub">Best month YTD</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-label">Gross Margin</div>
+      <div class="stat-val">61.3%</div>
+      <span class="stat-delta up">▲ 2.1pt</span>
+      <div class="stat-sub">Target: 58%</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-label">Total Expenses</div>
+      <div class="stat-val">$30,540</div>
+      <span class="stat-delta down">▼ 7.8%</span>
+      <div class="stat-sub">Labor + materials</div>
+    </div>
+    <div class="stat-card cyan">
+      <div class="stat-label">Net Profit</div>
+      <div class="stat-val">$17,280</div>
+      <span class="stat-delta up">▲ 21.6%</span>
+      <div class="stat-sub">3 months running above target</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="card-header">
+      <div><div class="card-title">Revenue vs. expenses — last 6 months</div><div class="card-sub">Monthly comparison</div></div>
+      <span class="card-badge green">+10.2% quarter over quarter</span>
+    </div>
+    <canvas id="financialChart" height="200"></canvas>
+  </div>
+  <div class="two-equal">
+    <div class="chart-card">
+      <div class="card-header"><div class="card-title">Expense breakdown</div></div>
+      <canvas id="expenseChart" height="180"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="card-header"><div><div class="card-title">Key insights</div><div class="card-sub">This month</div></div></div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px;">
+        <div style="display:flex;gap:10px;"><span style="color:var(--green);font-size:16px;">↑</span><div><div style="font-size:13px;font-weight:500;">Best revenue month YTD</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">$47.8K — up from $42.5K last month</div></div></div>
+        <div style="display:flex;gap:10px;"><span style="color:var(--green);font-size:16px;">↑</span><div><div style="font-size:13px;font-weight:500;">Margin up 2pts</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">Labor costs held steady while revenue grew</div></div></div>
+        <div style="display:flex;gap:10px;"><span style="color:var(--amber);font-size:16px;">!</span><div><div style="font-size:13px;font-weight:500;">Materials costs trending up</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">Up 4% MoM — watch supplier pricing</div></div></div>
+        <div style="display:flex;gap:10px;"><span style="color:var(--green);font-size:16px;">↑</span><div><div style="font-size:13px;font-weight:500;">Net profit target hit 3 months running</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">On track for best Q2 ever</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="watermark">Powered by <strong>Clarity</strong> — AI Business Intelligence · Joplin, MO · 4-State Area</div>
+</div>
+
+<!-- SALES PAGE -->
+<div class="page" id="page-sales">
+  <div class="topbar">
+    <div><div class="page-title">Sales performance</div><div class="page-sub">Jobs, tickets & close rates</div></div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card blue">
+      <div class="stat-label">Jobs Completed</div>
+      <div class="stat-val">84</div>
+      <span class="stat-delta up">▲ 9</span>
+      <div class="stat-sub">vs. 75 last month</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label">Avg Ticket Value</div>
+      <div class="stat-val">$569</div>
+      <span class="stat-delta up">▲ 4.2%</span>
+      <div class="stat-sub">Up from $546</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-label">Quote Close Rate</div>
+      <div class="stat-val">78%</div>
+      <span class="stat-delta up">▲ 6%</span>
+      <div class="stat-sub">Industry avg: 65%</div>
+    </div>
+    <div class="stat-card cyan">
+      <div class="stat-label">Quotes Sent</div>
+      <div class="stat-val">107</div>
+      <span class="stat-delta up">▲ 12</span>
+      <div class="stat-sub">84 converted to jobs</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="card-header">
+      <div><div class="card-title">Revenue by service type</div><div class="card-sub">This month · all jobs</div></div>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Service type</th><th>Jobs</th><th>Revenue</th><th>Avg ticket</th><th>Margin</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td><span class="dot" style="background:#3b82f6;"></span>Service A</td><td>38</td><td>$19,840</td><td>$522</td><td style="color:var(--green);">67%</td><td style="color:var(--green);font-size:12px;">▲ 8%</td></tr>
+        <tr><td><span class="dot" style="background:#22c55e;"></span>Service B</td><td>14</td><td>$16,240</td><td>$1,160</td><td style="color:var(--green);">58%</td><td style="color:var(--green);font-size:12px;">▲ 3%</td></tr>
+        <tr><td><span class="dot" style="background:#f59e0b;"></span>Service C</td><td>26</td><td>$7,680</td><td>$295</td><td style="color:var(--amber);">52%</td><td style="color:var(--muted);font-size:12px;">— flat</td></tr>
+        <tr><td><span class="dot" style="background:#06b6d4;"></span>Other</td><td>6</td><td>$4,060</td><td>$677</td><td style="color:var(--red);">44%</td><td style="color:var(--red);font-size:12px;">▼ 5%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="chart-card">
+    <div class="card-header"><div><div class="card-title">Quote close rate by service</div><div class="card-sub">This month</div></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div>
+        <div class="prog-item"><div class="prog-label"><span>Service A</span><span>82%</span></div><div class="prog-bar"><div class="prog-fill" style="width:82%;background:#3b82f6;"></div></div></div>
+        <div class="prog-item"><div class="prog-label"><span>Service B</span><span>71%</span></div><div class="prog-bar"><div class="prog-fill" style="width:71%;background:#22c55e;"></div></div></div>
+      </div>
+      <div>
+        <div class="prog-item"><div class="prog-label"><span>Service C</span><span>94%</span></div><div class="prog-bar"><div class="prog-fill" style="width:94%;background:#f59e0b;"></div></div></div>
+        <div class="prog-item"><div class="prog-label"><span>Other</span><span>55%</span></div><div class="prog-bar"><div class="prog-fill" style="width:55%;background:#06b6d4;"></div></div></div>
+      </div>
+    </div>
+    <div style="margin-top:14px;padding:10px 14px;background:rgba(34,197,94,.06);border-radius:8px;font-size:12px;color:var(--dim);">💡 <strong style="color:var(--text);">Insight:</strong> Service C closes at 94% — highest of any type. Consider pushing it more aggressively in your sales conversations.</div>
+  </div>
+  <div class="watermark">Powered by <strong>Clarity</strong> — AI Business Intelligence · Joplin, MO · 4-State Area</div>
+</div>
+
+<!-- INVENTORY PAGE -->
+<div class="page" id="page-inventory">
+  <div class="topbar">
+    <div><div class="page-title">Inventory</div><div class="page-sub">Live stock levels — updated daily</div></div>
+  </div>
+  <div class="stats-row" style="grid-template-columns:repeat(3,1fr);">
+    <div class="stat-card red">
+      <div class="stat-label">Items to reorder</div>
+      <div class="stat-val">2</div>
+      <span class="stat-delta down">Action needed</span>
+      <div class="stat-sub">Below minimum stock level</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-label">Low stock items</div>
+      <div class="stat-val">1</div>
+      <span class="stat-delta down">Monitor closely</span>
+      <div class="stat-sub">Approaching minimum</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label">Items fully stocked</div>
+      <div class="stat-val">4</div>
+      <span class="stat-delta up">All good</span>
+      <div class="stat-sub">Above minimum levels</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="card-header"><div><div class="card-title">Stock status — all items</div><div class="card-sub">Live inventory · click any item to see history</div></div></div>
+    <div class="inv-item"><div><div style="font-weight:500;">Supply Item A</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">4 units on hand · min: 8</div></div><span class="inv-badge reorder">⚠ Reorder now</span></div>
+    <div class="inv-item"><div><div style="font-weight:500;">Supply Item B</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">6 units on hand · min: 10</div></div><span class="inv-badge reorder">⚠ Reorder now</span></div>
+    <div class="inv-item"><div><div style="font-weight:500;">Supply Item C</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">18 units on hand · min: 12</div></div><span class="inv-badge ok">OK</span></div>
+    <div class="inv-item"><div><div style="font-weight:500;">Supply Item D</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">11 units on hand · min: 8</div></div><span class="inv-badge ok">OK</span></div>
+    <div class="inv-item"><div><div style="font-weight:500;">Supply Item E</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">9 units on hand · min: 6</div></div><span class="inv-badge ok">OK</span></div>
+    <div class="inv-item"><div><div style="font-weight:500;">Supply Item F</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">7 units on hand · min: 5</div></div><span class="inv-badge low">Low</span></div>
+    <div class="inv-item"><div><div style="font-weight:500;">Supply Item G</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">13 units on hand · min: 6</div></div><span class="inv-badge ok">OK</span></div>
+  </div>
+  <div class="watermark">Powered by <strong>Clarity</strong> — AI Business Intelligence · Joplin, MO · 4-State Area</div>
+</div>
+
+<!-- CUSTOMERS PAGE -->
+<div class="page" id="page-customers">
+  <div class="topbar">
+    <div><div class="page-title">Customers</div><div class="page-sub">Retention, lifetime value & at-risk alerts</div></div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card blue">
+      <div class="stat-label">New customers</div>
+      <div class="stat-val">27</div>
+      <span class="stat-delta up">▲ 8</span>
+      <div class="stat-sub">This month</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label">Returning</div>
+      <div class="stat-val">57</div>
+      <span class="stat-delta up">▲ 3</span>
+      <div class="stat-sub">Repeat visits</div>
+    </div>
+    <div class="stat-card cyan">
+      <div class="stat-label">Repeat rate</div>
+      <div class="stat-val">68%</div>
+      <span class="stat-delta down">▼ 3.2%</span>
+      <div class="stat-sub">Industry avg: 55%</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-label">Avg lifetime value</div>
+      <div class="stat-val">$1,840</div>
+      <span class="stat-delta up">▲ 12.4%</span>
+      <div class="stat-sub">Per customer</div>
+    </div>
+  </div>
+  <div class="two-equal">
+    <div class="chart-card">
+      <div class="card-header"><div><div class="card-title">Top customers by lifetime value</div><div class="card-sub">All-time spend</div></div></div>
+      <div class="cust-item"><div class="cust-avatar" style="background:rgba(59,130,246,.15);color:#3b82f6;">RH</div><div><div style="font-size:13px;font-weight:500;">Rogers Hardware</div><div style="font-size:11px;color:var(--muted);">8 jobs · Last: 2 weeks ago</div></div><div><div class="cust-val">$14,220</div><div class="cust-status" style="color:var(--green);">Repeat ✓</div></div></div>
+      <div class="cust-item"><div class="cust-avatar" style="background:rgba(34,197,94,.15);color:#22c55e;">TF</div><div><div style="font-size:13px;font-weight:500;">Thompson Family</div><div style="font-size:11px;color:var(--muted);">12 jobs · Last: 3 weeks ago</div></div><div><div class="cust-val">$9,840</div><div class="cust-status" style="color:var(--green);">Repeat ✓</div></div></div>
+      <div class="cust-item"><div class="cust-avatar" style="background:rgba(245,158,11,.15);color:#f59e0b;">MP</div><div><div style="font-size:13px;font-weight:500;">Midwest Properties</div><div style="font-size:11px;color:var(--muted);">5 jobs · Last: 1 month ago</div></div><div><div class="cust-val">$8,100</div><div class="cust-status" style="color:var(--green);">Repeat ✓</div></div></div>
+      <div class="cust-item"><div class="cust-avatar" style="background:rgba(239,68,68,.15);color:#ef4444;">JC</div><div><div style="font-size:13px;font-weight:500;">Johnson Commercial</div><div style="font-size:11px;color:var(--muted);">2 jobs · Last: 4 months ago</div></div><div><div class="cust-val">$6,450</div><div class="cust-status" style="color:var(--amber);">At risk ⚠</div></div></div>
+      <div class="cust-item"><div class="cust-avatar" style="background:rgba(6,182,212,.15);color:#06b6d4;">SW</div><div><div style="font-size:13px;font-weight:500;">Sara Whitfield</div><div style="font-size:11px;color:var(--muted);">6 jobs · Last: 1 week ago</div></div><div><div class="cust-val">$5,920</div><div class="cust-status" style="color:var(--green);">Repeat ✓</div></div></div>
+    </div>
+    <div class="chart-card">
+      <div class="card-header"><div><div class="card-title">Customer health</div><div class="card-sub">This month breakdown</div></div></div>
+      <canvas id="custChart" height="180"></canvas>
+      <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--muted);">New customers</span><span style="font-weight:500;color:var(--accent);">27</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--muted);">Returning</span><span style="font-weight:500;color:var(--green);">57</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:var(--muted);">At-risk (90+ days)</span><span style="font-weight:500;color:var(--amber);">8</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;padding-top:8px;border-top:1px solid var(--border);"><span style="color:var(--muted);">Avg lifetime value</span><span style="font-weight:600;">$1,840</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="watermark">Powered by <strong>Clarity</strong> — AI Business Intelligence · Joplin, MO · 4-State Area</div>
+</div>
+
+<!-- AUTOMATION PAGE -->
+<div class="page" id="page-automation">
+  <div class="topbar">
+    <div><div class="page-title">Automation activity</div><div class="page-sub">Missed calls, SMS replies & review requests</div></div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card blue">
+      <div class="stat-label">Missed calls this month</div>
+      <div class="stat-val">47</div>
+      <span class="stat-delta up">All captured</span>
+      <div class="stat-sub">100% auto-replied</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label">Jobs recovered</div>
+      <div class="stat-val">14</div>
+      <span class="stat-delta up">▲ 3 vs. last mo.</span>
+      <div class="stat-sub">From missed call replies</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-label">Revenue recovered</div>
+      <div class="stat-val">$7,980</div>
+      <span class="stat-delta up">Would've been lost</span>
+      <div class="stat-sub">Avg $570/job × 14 jobs</div>
+    </div>
+    <div class="stat-card cyan">
+      <div class="stat-label">New Google reviews</div>
+      <div class="stat-val">23</div>
+      <span class="stat-delta up">▲ 8 vs. last mo.</span>
+      <div class="stat-sub">Auto-requested after jobs</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="card-header"><div><div class="card-title">Missed call log</div><div class="card-sub">This month · all auto-replied within 60 seconds</div></div><span class="card-badge green">47 of 47 replied ✓</span></div>
+    <div class="call-row"><div><div style="font-weight:500;">(417) 555-0182</div><div style="font-size:11px;color:var(--muted);">June 4 · 10:14 AM</div></div><div style="font-size:12px;color:var(--muted);">Reply in 38s</div><span class="call-status replied">Replied ✓</span></div>
+    <div class="call-row"><div><div style="font-weight:500;">(417) 555-0291</div><div style="font-size:11px;color:var(--muted);">June 4 · 8:52 AM</div></div><div style="font-size:12px;color:var(--muted);">Reply in 42s</div><span class="call-status replied">Replied ✓</span></div>
+    <div class="call-row"><div><div style="font-weight:500;">(918) 555-0847</div><div style="font-size:11px;color:var(--muted);">June 3 · 4:31 PM</div></div><div style="font-size:12px;color:var(--muted);">Reply in 29s</div><span class="call-status replied">Replied ✓</span></div>
+    <div class="call-row"><div><div style="font-weight:500;">(417) 555-1024</div><div style="font-size:11px;color:var(--muted);">June 3 · 2:18 PM</div></div><div style="font-size:12px;color:var(--muted);">Reply in 55s</div><span class="call-status replied">Replied ✓</span></div>
+    <div class="call-row"><div><div style="font-weight:500;">(620) 555-0338</div><div style="font-size:11px;color:var(--muted);">June 3 · 11:05 AM</div></div><div style="font-size:12px;color:var(--muted);">Reply in 44s</div><span class="call-status replied">Replied ✓</span></div>
+    <div style="margin-top:12px;font-size:12px;color:var(--muted);text-align:center;">Showing 5 of 47 calls this month</div>
+  </div>
+  <div class="chart-card">
+    <div class="card-header"><div><div class="card-title">ROI summary</div><div class="card-sub">Automation value this month</div></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+      <div style="background:var(--surface2);border-radius:10px;padding:16px;text-align:center;"><div style="font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;">Revenue recovered</div><div style="font-size:24px;font-weight:600;color:var(--green);">$7,980</div><div style="font-size:11px;color:var(--muted);margin-top:4px;">From missed calls</div></div>
+      <div style="background:var(--surface2);border-radius:10px;padding:16px;text-align:center;"><div style="font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;">Monthly cost</div><div style="font-size:24px;font-weight:600;color:var(--text);">$650</div><div style="font-size:11px;color:var(--muted);margin-top:4px;">Automation retainer</div></div>
+      <div style="background:rgba(34,197,94,.08);border-radius:10px;padding:16px;text-align:center;"><div style="font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;">Net return</div><div style="font-size:24px;font-weight:600;color:var(--green);">12.3x</div><div style="font-size:11px;color:var(--muted);margin-top:4px;">Return on investment</div></div>
+    </div>
+  </div>
+  <div class="watermark">Powered by <strong>Clarity</strong> — AI Business Intelligence · Joplin, MO · 4-State Area</div>
+</div>
+
+</main>
+
+<script>
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  btn.classList.add('active');
+  initCharts();
+}
+
+function setRange(btn) {
+  btn.closest('.range-tabs').querySelectorAll('.range-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+let chartsInit = false;
+function initCharts() {
+  if (chartsInit) return;
+  chartsInit = true;
+
+  const chartDefaults = {
+    plugins: { legend: { labels: { color: '#6b7280', font: { size: 11 }, boxWidth: 10, boxHeight: 10 } }, tooltip: { backgroundColor: '#1e2029', borderColor: 'rgba(255,255,255,0.08)', borderWidth: 1, titleColor: '#e8eaf0', bodyColor: '#9ca3af' } },
+    scales: { x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#6b7280', font: { size: 11 } } }, y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#6b7280', font: { size: 11 } } } }
+  };
+
+  if (document.getElementById('revenueChart')) {
+    new Chart(document.getElementById('revenueChart'), { type: 'bar', data: { labels: ['Jan','Feb','Mar','Apr','May','Jun'], datasets: [{ label: 'Revenue', data: [34200,36800,38400,42540,41200,47820], backgroundColor: 'rgba(59,130,246,0.7)', borderRadius: 5 }, { label: 'Expenses', data: [24100,25400,26800,29100,28600,30540], backgroundColor: 'rgba(239,68,68,0.45)', borderRadius: 5 }] }, options: { ...chartDefaults, plugins: { ...chartDefaults.plugins }, scales: { ...chartDefaults.scales, y: { ...chartDefaults.scales.y, ticks: { ...chartDefaults.scales.y.ticks, callback: v => '$' + (v/1000).toFixed(0) + 'k' } } } } });
+  }
+  if (document.getElementById('jobChart')) {
+    new Chart(document.getElementById('jobChart'), { type: 'doughnut', data: { labels: ['Service A','Service B','Service C','Other'], datasets: [{ data: [19840,16240,7680,4060], backgroundColor: ['#3b82f6','#22c55e','#f59e0b','#06b6d4'], borderWidth: 0, hoverOffset: 6 }] }, options: { cutout: '68%', plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e2029', borderColor: 'rgba(255,255,255,0.08)', borderWidth: 1, titleColor: '#e8eaf0', bodyColor: '#9ca3af', callbacks: { label: ctx => ' $' + ctx.raw.toLocaleString() } } } } });
+  }
+  if (document.getElementById('financialChart')) {
+    new Chart(document.getElementById('financialChart'), { type: 'bar', data: { labels: ['Jan','Feb','Mar','Apr','May','Jun'], datasets: [{ label: 'Revenue', data: [34200,36800,38400,42540,41200,47820], backgroundColor: 'rgba(59,130,246,0.7)', borderRadius: 5 }, { label: 'Expenses', data: [24100,25400,26800,29100,28600,30540], backgroundColor: 'rgba(239,68,68,0.45)', borderRadius: 5 }] }, options: { ...chartDefaults, scales: { ...chartDefaults.scales, y: { ...chartDefaults.scales.y, ticks: { ...chartDefaults.scales.y.ticks, callback: v => '$' + (v/1000).toFixed(0) + 'k' } } } } });
+  }
+  if (document.getElementById('expenseChart')) {
+    new Chart(document.getElementById('expenseChart'), { type: 'doughnut', data: { labels: ['Labor','Materials','Overhead','Marketing','Other'], datasets: [{ data: [14200,8400,4800,2100,1040], backgroundColor: ['#3b82f6','#ef4444','#f59e0b','#22c55e','#06b6d4'], borderWidth: 0 }] }, options: { cutout: '60%', plugins: { legend: { display: true, position: 'bottom', labels: { color: '#6b7280', font: { size: 11 }, boxWidth: 10 } }, tooltip: { backgroundColor: '#1e2029', borderColor: 'rgba(255,255,255,0.08)', borderWidth: 1, titleColor: '#e8eaf0', bodyColor: '#9ca3af', callbacks: { label: ctx => ' $' + ctx.raw.toLocaleString() } } } } });
+  }
+  if (document.getElementById('custChart')) {
+    new Chart(document.getElementById('custChart'), { type: 'doughnut', data: { labels: ['Returning','New','At-risk'], datasets: [{ data: [57,27,8], backgroundColor: ['#22c55e','#3b82f6','#f59e0b'], borderWidth: 0 }] }, options: { cutout: '65%', plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e2029', borderColor: 'rgba(255,255,255,0.08)', borderWidth: 1, titleColor: '#e8eaf0', bodyColor: '#9ca3af' } } } });
+  }
+}
+
+window.addEventListener('load', initCharts);
+</script>
+</body>
+</html>
