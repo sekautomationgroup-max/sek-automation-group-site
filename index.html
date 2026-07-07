@@ -1063,6 +1063,63 @@
         </div>
       </div>
 
+      <hr style="border: none; border-top: 1px solid var(--border);">
+
+      <style>
+        .sw-demo-btn { margin-top: 22px; }
+        .sw-note { margin-top: 16px; font-size: 14px; color: var(--steel); line-height: 1.6; }
+        .sw-hero-shot { width: 100%; border-radius: var(--radius-lg); border: 1px solid var(--border); display: block; box-shadow: 0 12px 34px rgba(11,31,59,0.12); }
+        .sw-shots-wrap { margin-top: 40px; }
+        .sw-shots-head { text-align: center; margin-bottom: 24px; }
+        .sw-shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .sw-shot { width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border); display: block; box-shadow: 0 6px 18px rgba(11,31,59,0.08); }
+        .sw-cap { text-align: center; font-size: 13px; color: var(--steel); margin-top: 10px; }
+        .sw-missing { display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px 18px; min-height: 200px; color: var(--steel); font-size: 13px; background: var(--blue-xpale); border: 1px dashed var(--blue-light); border-radius: var(--radius-md); box-shadow: none; }
+        .sw-hero-shot.sw-missing { min-height: 300px; border-radius: var(--radius-lg); }
+        @media (max-width: 768px) { .sw-shots { grid-template-columns: 1fr; } }
+      </style>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+        <div>
+          <div class="section-label">Service 05</div>
+          <h2 class="section-h2" style="font-size: 26px;">SiteWorks — Work Order Management Software</h2>
+          <p style="color: var(--steel); margin-bottom: 16px; font-size: 15px; line-height: 1.7;">SiteWorks is our own work order management platform, purpose-built for field service, contractors, and HVAC teams. Run every job from the first request to the paid invoice in one place — no more sticky notes, spreadsheets, or lost paperwork. And because we build it in-house, SiteWorks can be custom-tailored to fit exactly how your business runs.</p>
+          <ul class="value-list">
+            <li><span class="value-dot"></span>Invoicing — turn completed jobs into invoices in a click</li>
+            <li><span class="value-dot"></span>Purchase orders — track materials and job costs with ease</li>
+            <li><span class="value-dot"></span>Scheduling &amp; dispatch — assign crews and see your whole day at a glance</li>
+            <li><span class="value-dot"></span>Dashboards — a real-time view of jobs, revenue, and team performance</li>
+          </ul>
+          <p class="sw-note"><strong style="color: var(--navy);">Built for your business:</strong> designed for field service, contractors &amp; HVAC — and fully custom-built to match your exact workflow.</p>
+          <button class="btn btn-primary sw-demo-btn" onclick="requestDemo('SiteWorks')">Request a Demo →</button>
+        </div>
+        <div style="background: var(--blue-xpale); border-radius: var(--radius-xl); padding: 20px; border: 1px solid var(--border);">
+          <img class="sw-hero-shot" src="assets/siteworks/dashboard.jpg" alt="SiteWorks Sales Dashboard showing revenue, outstanding invoices, and completion rate" onerror="swMissing(this,'Dashboard view')">
+          <p class="sw-cap">Live Sales Dashboard — revenue, outstanding balances, and field performance at a glance.</p>
+        </div>
+      </div>
+
+      <div class="sw-shots-wrap">
+        <div class="sw-shots-head">
+          <div class="section-label">SiteWorks in action</div>
+          <h2 class="section-h2" style="font-size: 22px;">See it working</h2>
+        </div>
+        <div class="sw-shots">
+          <figure style="margin:0;">
+            <img class="sw-shot" src="assets/siteworks/work-orders.jpg" alt="SiteWorks work orders list with live status counts" onerror="swMissing(this,'Work orders')">
+            <figcaption class="sw-cap">Work orders &amp; live status</figcaption>
+          </figure>
+          <figure style="margin:0;">
+            <img class="sw-shot" src="assets/siteworks/scheduling.jpg" alt="SiteWorks drag-and-drop scheduling calendar across the crew" onerror="swMissing(this,'Scheduling &amp; dispatch')">
+            <figcaption class="sw-cap">Scheduling &amp; dispatch</figcaption>
+          </figure>
+          <figure style="margin:0;">
+            <img class="sw-shot" src="assets/siteworks/invoicing.jpg" alt="SiteWorks invoices list with paid, sent, and overdue status" onerror="swMissing(this,'Invoicing')">
+            <figcaption class="sw-cap">Invoicing</figcaption>
+          </figure>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1712,6 +1769,27 @@
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Sends the visitor to the contact form with a SiteWorks demo request pre-filled
+  function requestDemo(product) {
+    showPage('contact');
+    var bt = document.getElementById('biz-type');
+    if (bt) {
+      for (var i = 0; i < bt.options.length; i++) {
+        if (/Home services/i.test(bt.options[i].text)) { bt.selectedIndex = i; break; }
+      }
+    }
+    var ch = document.getElementById('challenge');
+    if (ch) { ch.value = "I'd like to request a demo of " + product + " work order management software."; }
+  }
+
+  // Swaps a missing screenshot for a styled "coming soon" placeholder
+  function swMissing(img, label) {
+    var d = document.createElement('div');
+    d.className = img.className + ' sw-missing';
+    d.textContent = label + ' — screenshot coming soon';
+    if (img.parentNode) { img.parentNode.replaceChild(d, img); }
   }
 
   async function submitForm() {
