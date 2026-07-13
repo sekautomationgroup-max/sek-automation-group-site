@@ -1633,7 +1633,7 @@
           <div class="contact-detail-icon">
             <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
-          <span>contact@sekautomationgroup.com</span>
+          <span>sekautomationgroup@gmail.com</span>
         </div>
 
         <div class="contact-detail">
@@ -1934,7 +1934,7 @@
 
   var swHist=[], swBusy=false, swStarted=false, swLead=false, swLog=[];
 
-  var SYSTEM = 'You are the friendly AI assistant for SEK Automation Group. You help small business owners understand how AI automation can save them time and money.\n\nABOUT SEK AUTOMATION GROUP:\n- Done-for-you AI automation for small businesses — no tech skills needed\n- Services: AI Customer Service Chatbot, Workflow Automation, AI Marketing Materials, AI Lead Generation\n- Save 10+ hours/week, setup in 48 hours, works 24/7\n- Pricing discussed during free assessment\n- Contact: contact@sekautomationgroup.com\n- Free AI Assessment (20 min) + Free AI Starter Checklist PDF\n\nSERVICES:\n1. AI Chatbot — 24/7 responses, books appointments, captures leads, under 3s response\n2. Workflow Automation — invoicing, reminders, follow-ups, saves 5-15 hrs/week\n3. AI Marketing — flyers, social posts, email campaigns, fraction of agency cost\n4. Lead Generation — automated email+SMS follow-up, lead capture, CRM integration\n\nMISSED CALL TEXT-BACK: Customer calls, you miss it, they get a text in 60 seconds. Recovers 3-5 jobs/month on average.\n\nYOUR JOB:\n- Answer questions helpfully and concisely (max 3 short paragraphs)\n- Capture name+email+business when someone wants more info\n- Encourage free assessment booking\n- Never invent pricing numbers\n- Tone: friendly, plain English, no jargon\n- If asked about pricing say exact numbers come from the free assessment';
+  var SYSTEM = 'You are the friendly AI assistant for SEK Automation Group. You help small business owners understand how AI automation can save them time and money.\n\nABOUT SEK AUTOMATION GROUP:\n- Done-for-you AI automation for small businesses — no tech skills needed\n- Services: AI Customer Service Chatbot, Workflow Automation, AI Marketing Materials, AI Lead Generation\n- Save 10+ hours/week, setup in 48 hours, works 24/7\n- Pricing discussed during free assessment\n- Contact: sekautomationgroup@gmail.com\n- Free AI Assessment (20 min) + Free AI Starter Checklist PDF\n\nSERVICES:\n1. AI Chatbot — 24/7 responses, books appointments, captures leads, under 3s response\n2. Workflow Automation — invoicing, reminders, follow-ups, saves 5-15 hrs/week\n3. AI Marketing — flyers, social posts, email campaigns, fraction of agency cost\n4. Lead Generation — automated email+SMS follow-up, lead capture, CRM integration\n\nMISSED CALL TEXT-BACK: Customer calls, you miss it, they get a text in 60 seconds. Recovers 3-5 jobs/month on average.\n\nYOUR JOB:\n- Answer questions helpfully and concisely (max 3 short paragraphs)\n- Capture name+email+business when someone wants more info\n- Encourage free assessment booking\n- Never invent pricing numbers\n- Tone: friendly, plain English, no jargon\n- If asked about pricing say exact numbers come from the free assessment';
 
   // Auto-open chat after 3 seconds
   window.addEventListener('load', function(){
@@ -2082,7 +2082,7 @@
         document.getElementById('sek-btn').disabled=false;
         return;
       }
-      var reply=data.content&&data.content[0]&&data.content[0].text?data.content[0].text:'Sorry, I hit a snag. Email us at contact@sekautomationgroup.com';
+      var reply=data.content&&data.content[0]&&data.content[0].text?data.content[0].text:'Sorry, I hit a snag. Email us at sekautomationgroup@gmail.com';
       swHist.push({role:'assistant',content:reply});
       swLog.push({r:'assistant',t:reply});
       swNoTyping();
