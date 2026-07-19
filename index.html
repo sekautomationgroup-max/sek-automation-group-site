@@ -936,6 +936,47 @@
     </div>
   </section>
 
+  <style>
+    /* ── SITEWORKS HOME PROMO ─────────────────────── */
+    .sw-promo { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); border-radius: var(--radius-xl); padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; }
+    .sw-promo-badge { display: inline-block; background: rgba(126,184,255,0.15); color: #7EB8FF; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; margin-bottom: 16px; }
+    .sw-promo h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 14px; }
+    .sw-promo p { color: rgba(255,255,255,0.72); font-size: 15px; line-height: 1.7; margin-bottom: 20px; }
+    .sw-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+    .sw-chip { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.9); font-size: 12.5px; font-weight: 600; padding: 6px 12px; border-radius: 999px; }
+    .sw-promo-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn-white { background: #fff; color: var(--navy); }
+    .btn-white:hover { background: rgba(255,255,255,0.9); }
+    .btn-ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.6); }
+    .sw-promo-shot img { width: 100%; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.12); display: block; box-shadow: 0 18px 44px rgba(0,0,0,0.35); }
+    @media (max-width: 768px) { .sw-promo { grid-template-columns: 1fr; padding: 32px 24px; gap: 28px; } }
+  </style>
+
+  <section style="padding-top: 0;">
+    <div class="sw-promo">
+      <div>
+        <div class="sw-promo-badge">New · Our Own Software</div>
+        <h2>SiteWorks — every job from<br>first call to final payment</h2>
+        <p>Our work order management platform for field service, contractors, and HVAC teams. Stop running jobs on sticky notes and spreadsheets — track, schedule, and invoice every job in one place. Live now, and we can custom-build it around how your business actually runs.</p>
+        <div class="sw-chips">
+          <span class="sw-chip">Work Orders</span>
+          <span class="sw-chip">Scheduling &amp; Dispatch</span>
+          <span class="sw-chip">Invoicing</span>
+          <span class="sw-chip">Purchase Orders</span>
+          <span class="sw-chip">Dashboards</span>
+        </div>
+        <div class="sw-promo-btns">
+          <button class="btn btn-white" onclick="showSiteWorks()">See SiteWorks →</button>
+          <button class="btn btn-ghost" onclick="requestDemo('SiteWorks')">Request a Demo</button>
+        </div>
+      </div>
+      <div class="sw-promo-shot">
+        <img src="assets/siteworks/dashboard.jpg" alt="SiteWorks Sales Dashboard showing revenue, outstanding invoices, and completion rate" onerror="this.parentNode.style.display='none'">
+      </div>
+    </div>
+  </section>
+
   <div class="how-bg">
     <div class="how-inner">
       <div class="section-label" style="color:#7EB8FF;">How it works</div>
@@ -1079,7 +1120,7 @@
         @media (max-width: 768px) { .sw-shots { grid-template-columns: 1fr; } }
       </style>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+      <div id="siteworks" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; scroll-margin-top: 90px;">
         <div>
           <div class="section-label">Service 05</div>
           <h2 class="section-h2" style="font-size: 26px;">SiteWorks — Work Order Management Software</h2>
@@ -1771,6 +1812,18 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // Opens the Services page and scrolls straight to the SiteWorks section
+  function showSiteWorks() {
+    showPage('services');
+    setTimeout(function () {
+      var el = document.getElementById('siteworks');
+      if (el) {
+        var y = el.getBoundingClientRect().top + window.pageYOffset - 90;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 260);
+  }
+
   // Sends the visitor to the contact form with a SiteWorks demo request pre-filled
   function requestDemo(product) {
     showPage('contact');
@@ -1934,7 +1987,7 @@
 
   var swHist=[], swBusy=false, swStarted=false, swLead=false, swLog=[];
 
-  var SYSTEM = 'You are the friendly AI assistant for SEK Automation Group. You help small business owners understand how AI automation can save them time and money.\n\nABOUT SEK AUTOMATION GROUP:\n- Done-for-you AI automation for small businesses — no tech skills needed\n- Services: AI Customer Service Chatbot, Workflow Automation, AI Marketing Materials, AI Lead Generation\n- Save 10+ hours/week, setup in 48 hours, works 24/7\n- Pricing discussed during free assessment\n- Contact: sekautomationgroup@gmail.com\n- Free AI Assessment (20 min) + Free AI Starter Checklist PDF\n\nSERVICES:\n1. AI Chatbot — 24/7 responses, books appointments, captures leads, under 3s response\n2. Workflow Automation — invoicing, reminders, follow-ups, saves 5-15 hrs/week\n3. AI Marketing — flyers, social posts, email campaigns, fraction of agency cost\n4. Lead Generation — automated email+SMS follow-up, lead capture, CRM integration\n\nMISSED CALL TEXT-BACK: Customer calls, you miss it, they get a text in 60 seconds. Recovers 3-5 jobs/month on average.\n\nYOUR JOB:\n- Answer questions helpfully and concisely (max 3 short paragraphs)\n- Capture name+email+business when someone wants more info\n- Encourage free assessment booking\n- Never invent pricing numbers\n- Tone: friendly, plain English, no jargon\n- If asked about pricing say exact numbers come from the free assessment';
+  var SYSTEM = 'You are the friendly AI assistant for SEK Automation Group. You help small business owners understand how AI automation can save them time and money.\n\nABOUT SEK AUTOMATION GROUP:\n- Done-for-you AI automation for small businesses — no tech skills needed\n- Services: AI Customer Service Chatbot, Workflow Automation, AI Marketing Materials, AI Lead Generation, and SiteWorks work order management software\n- Save 10+ hours/week, setup in 48 hours, works 24/7\n- Pricing discussed during free assessment\n- Contact: sekautomationgroup@gmail.com\n- Free AI Assessment (20 min) + Free AI Starter Checklist PDF\n\nSERVICES:\n1. AI Chatbot — 24/7 responses, books appointments, captures leads, under 3s response\n2. Workflow Automation — invoicing, reminders, follow-ups, saves 5-15 hrs/week\n3. AI Marketing — flyers, social posts, email campaigns, fraction of agency cost\n4. Lead Generation — automated email+SMS follow-up, lead capture, CRM integration\n5. SiteWorks — our own work order management software for field service, contractors, and HVAC\n\nSITEWORKS (our flagship software product, live and available today):\n- A work order management platform built in-house by SEK Automation Group\n- Built for field service businesses, contractors, and HVAC companies\n- Core features: work orders with live status tracking, drag-and-drop scheduling and dispatch, invoicing, purchase orders, customer and property records, and real-time sales dashboards\n- Techs get a phone-friendly view: start/complete jobs, automatic time tracking, job notes, parts and materials, receipt photos, and one-tap directions\n- Tracks every job from the first call to the final payment so nothing falls through the cracks\n- Runs in any browser, no hardware to install\n- Can be custom-built and tailored to how a specific business runs\n- If someone asks about SiteWorks, work order software, job tracking, scheduling crews, or field service management, explain SiteWorks and offer to set up a live demo\n- Do not quote SiteWorks pricing; pricing is discussed during the free assessment or demo\n\nMISSED CALL TEXT-BACK: Customer calls, you miss it, they get a text in 60 seconds. Recovers 3-5 jobs/month on average.\n\nYOUR JOB:\n- Answer questions helpfully and concisely (max 3 short paragraphs)\n- Capture name+email+business when someone wants more info\n- Encourage free assessment booking\n- Never invent pricing numbers\n- Tone: friendly, plain English, no jargon\n- If asked about pricing say exact numbers come from the free assessment';
 
   // Auto-open chat after 3 seconds
   window.addEventListener('load', function(){
@@ -1971,7 +2024,7 @@
 
   function swInit(){
     swBot("Hey there! \uD83D\uDC4B I'm SEK's AI assistant. I can answer questions about our automation services, explain pricing, or help figure out which solution fits your business.\n\nWhat brings you here today?",
-      ["What services do you offer?","How much does it cost?","I'm missing calls","Book a free assessment"]);
+      ["What services do you offer?","Tell me about SiteWorks","How much does it cost?","I'm missing calls","Book a free assessment"]);
   }
 
   function swBot(txt, qrs){
@@ -2097,6 +2150,7 @@
 
   function swQRs(u,b){
     u=u.toLowerCase(); b=b.toLowerCase();
+    if(u.indexOf('siteworks')>-1||u.indexOf('work order')>-1||u.indexOf('dispatch')>-1||b.indexOf('siteworks')>-1) return ['Set up a SiteWorks demo','Can you customize it for us?','How much does it cost?'];
     if(u.indexOf('price')>-1||u.indexOf('cost')>-1||b.indexOf('assessment')>-1) return ['Book my free assessment','What\'s included?'];
     if(u.indexOf('chatbot')>-1||u.indexOf('customer')>-1) return ['How does it book appointments?','How much does it cost?'];
     if(u.indexOf('miss')>-1||u.indexOf('call')>-1) return ['Tell me more','How fast does it respond?','Get this set up'];
