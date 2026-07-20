@@ -1346,6 +1346,74 @@
 
   <section>
 
+    <!-- ── FEATURED: SITEWORKS ─────────────────────── -->
+    <style>
+      .sw-work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 20px; background: var(--blue-xpale); }
+      .sw-work-grid figure { margin: 0; }
+      .sw-work-grid img { width: 100%; display: block; border-radius: var(--radius-md); border: 1px solid var(--border); box-shadow: 0 6px 18px rgba(11,31,59,0.10); }
+      .sw-work-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 56px; }
+      @media (max-width: 768px) { .sw-work-grid { grid-template-columns: 1fr; } }
+    </style>
+
+    <div class="section-label">Featured project</div>
+    <h2 class="section-h2">SiteWorks — Work Order Management Software</h2>
+    <p class="section-sub" style="margin-bottom: 24px;">Our own field service platform, built in-house and live today. SiteWorks runs every job from the first call to the final payment — work orders, crew scheduling, invoicing, purchase orders, and real-time dashboards in one place. Built for contractors, HVAC, and general field service teams, and customizable to how your business actually runs.</p>
+
+    <div class="work-featured">
+      <div class="work-featured-header">
+        <div class="work-featured-meta">
+          <div class="work-featured-dot"></div>
+          <div>
+            <div class="work-featured-title">SiteWorks — Field Service Platform</div>
+            <div class="work-featured-sub">Live product · Built in-house by SEK Automation Group</div>
+          </div>
+        </div>
+        <span class="work-featured-tag">Our Software</span>
+      </div>
+      <div class="sw-work-grid">
+        <figure>
+          <img src="assets/siteworks/dashboard.jpg" alt="SiteWorks sales dashboard showing revenue, outstanding balances, and completion rate">
+          <figcaption class="sw-cap">Sales dashboard — revenue &amp; performance</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/siteworks/work-orders.jpg" alt="SiteWorks work orders list with live status counts">
+          <figcaption class="sw-cap">Work orders &amp; live status</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/siteworks/scheduling.jpg" alt="SiteWorks drag-and-drop scheduling calendar across the crew">
+          <figcaption class="sw-cap">Scheduling &amp; dispatch</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/siteworks/invoicing.jpg" alt="SiteWorks invoices list with paid, sent, and overdue status">
+          <figcaption class="sw-cap">Invoicing</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px;">
+      <div style="background: var(--blue-xpale); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--blue); font-family: 'Plus Jakarta Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px;">What it does</div>
+        <div style="font-size: 13px; color: var(--text-body);">Tracks every job end to end — request, schedule, work, invoice, paid</div>
+      </div>
+      <div style="background: var(--blue-xpale); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--blue); font-family: 'Plus Jakarta Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px;">Key features</div>
+        <div style="font-size: 13px; color: var(--text-body);">Work orders, drag-and-drop scheduling, invoicing, purchase orders, dashboards</div>
+      </div>
+      <div style="background: var(--blue-xpale); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--blue); font-family: 'Plus Jakarta Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px;">Who it's for</div>
+        <div style="font-size: 13px; color: var(--text-body);">Field service, contractors &amp; HVAC — and custom-built to fit your workflow</div>
+      </div>
+      <div style="background: var(--blue-xpale); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--blue); font-family: 'Plus Jakarta Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px;">Category</div>
+        <div style="font-size: 13px; color: var(--text-body);">Work Order Management Software</div>
+      </div>
+    </div>
+
+    <div class="sw-work-btns">
+      <button class="btn btn-primary" onclick="requestDemo('SiteWorks')">Request a Demo →</button>
+      <button class="btn btn-outline" onclick="showSiteWorks()">See full details</button>
+    </div>
+
     <!-- ── FEATURED: CLARITY DASHBOARD ─────────────── -->
     <div class="section-label">Featured project</div>
     <h2 class="section-h2">Clarity — Business Intelligence Dashboard</h2>
@@ -2125,7 +2193,10 @@
       var res=await fetch('https://sek-chat-proxy.sekautomationgroup.workers.dev/',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:400,system:SYSTEM,messages:swHist})
+        // thinking is explicitly disabled: Sonnet 5 runs adaptive thinking by default,
+        // and max_tokens caps thinking + reply together — a chat widget wants fast, short answers.
+        // max_tokens raised 400 -> 600 because Sonnet 5's tokenizer uses ~30% more tokens per word.
+        body:JSON.stringify({model:'claude-sonnet-5',max_tokens:600,thinking:{type:'disabled'},system:SYSTEM,messages:swHist})
       });
       var data=await res.json();
       if(data.error){
