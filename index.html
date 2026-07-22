@@ -1645,6 +1645,16 @@
             <textarea id="challenge" placeholder="E.g. I spend too much time answering the same customer questions, I'm not following up with leads fast enough, I need help with marketing..."></textarea>
           </div>
 
+          <div class="form-group">
+            <label for="phone">Phone number (optional)</label>
+            <input type="tel" id="phone" placeholder="(555) 123-4567">
+          </div>
+
+          <div class="form-group" style="display:flex; align-items:flex-start; gap:10px;">
+            <input type="checkbox" id="sms-consent" style="width:auto; margin-top:3px; flex-shrink:0;">
+            <label for="sms-consent" style="font-weight:400; font-size:13px; color:var(--steel); line-height:1.5;">I agree to receive text messages from SEK Automation Group about my inquiry. Message frequency varies, up to 4 msgs/month. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="privacy.html" target="_blank" style="color:var(--blue);">Privacy Policy</a> and <a href="terms.html" target="_blank" style="color:var(--blue);">Terms</a>.</label>
+          </div>
+
           <button class="form-submit" onclick="submitForm()">Send My Assessment Request →</button>
           <p class="form-note">We respond within 24 hours. No spam, ever. Your info stays private.</p>
         </div>
@@ -1720,6 +1730,8 @@
     const lname = document.getElementById('lname').value;
     const bizType = document.getElementById('biz-type').value;
     const challenge = document.getElementById('challenge').value;
+    const phone = document.getElementById('phone').value;
+    const smsConsent = document.getElementById('sms-consent').checked;
     if (!fname || !email) {
       alert('Please fill in your name and email to continue.');
       return;
@@ -1734,8 +1746,10 @@
         body: JSON.stringify({
           name: fname + ' ' + lname,
           email: email,
+          phone: phone,
           business_type: bizType,
-          challenge: challenge
+          challenge: challenge,
+          sms_consent: smsConsent ? 'Yes - agreed to SMS terms' : 'No'
         })
       });
       if (res.ok) {
