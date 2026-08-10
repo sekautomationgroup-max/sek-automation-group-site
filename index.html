@@ -984,7 +984,8 @@
           <span class="sw-chip">Dashboards</span>
         </div>
         <div class="sw-promo-btns">
-          <button class="btn btn-white" onclick="showSiteWorks()">See SiteWorks →</button>
+          <a class="btn btn-white" href="https://sek-siteworks.app" target="_blank" rel="noopener" style="text-decoration:none;">Visit the SiteWorks site ↗</a>
+          <button class="btn btn-ghost" onclick="showSiteWorks()">See details →</button>
           <button class="btn btn-ghost" onclick="requestDemo('SiteWorks')">Request a Demo</button>
         </div>
       </div>
@@ -1204,7 +1205,10 @@
             <li><span class="value-dot"></span>Dashboards — a real-time view of jobs, revenue, and team performance</li>
           </ul>
           <p class="sw-note"><strong style="color: var(--navy);">Built for your business:</strong> designed for field service, contractors &amp; HVAC — and fully custom-built to match your exact workflow.</p>
-          <button class="btn btn-primary sw-demo-btn" onclick="requestDemo('SiteWorks')">Request a Demo →</button>
+          <div class="sw-demo-btn" style="display:flex; flex-wrap:wrap; gap:12px;">
+            <a class="btn btn-primary" href="https://sek-siteworks.app" target="_blank" rel="noopener" style="text-decoration:none;">Visit the SiteWorks site ↗</a>
+            <button class="btn btn-outline" onclick="requestDemo('SiteWorks')">Request a Demo</button>
+          </div>
         </div>
         <div style="background: var(--blue-xpale); border-radius: var(--radius-xl); padding: 20px; border: 1px solid var(--border);">
           <img class="sw-hero-shot" src="assets/siteworks/dashboard.jpg" alt="SiteWorks Sales Dashboard showing revenue, outstanding invoices, and completion rate" onerror="swMissing(this,'Dashboard view')">
@@ -1910,6 +1914,7 @@
       <a onclick="showPage('work')">Our Work</a>
       <a onclick="showPage('about')">About</a>
       <a onclick="showPage('contact')">Contact</a>
+      <a href="https://sek-siteworks.app" target="_blank" rel="noopener">SiteWorks ↗</a>
       <a href="privacy.html">Privacy Policy</a>
       <a href="terms.html">Terms &amp; Conditions</a>
     </div>
