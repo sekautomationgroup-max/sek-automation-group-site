@@ -26,43 +26,20 @@ They are not stored in this repo.
 Paste the file contents into the matching function in the Twilio Console, set
 visibility to **Public**, then click **Deploy All**.
 
-## Vapi structured data schema
+## Vapi structured output
 
-The alert is most useful when the assistant extracts structured fields from the
-conversation. In the Vapi assistant's Analysis settings, set the structured data
-schema to:
+Extraction is configured in Vapi under Structured Outputs (`call_details`),
+attached to the assistant on its Analysis tab. Fields there are currently
+`name`, `email`, `phone`, `interest`, and `timeline`.
 
-```json
-{
-  "type": "object",
-  "properties": {
-    "caller_name": {
-      "type": "string",
-      "description": "The caller's full name"
-    },
-    "business_name": {
-      "type": "string",
-      "description": "The name of the caller's business, if mentioned"
-    },
-    "callback_number": {
-      "type": "string",
-      "description": "Best callback number in E.164 format"
-    },
-    "email": {
-      "type": "string",
-      "description": "The caller's email address, if given"
-    },
-    "preferred_callback_time": {
-      "type": "string",
-      "description": "Day and time the caller asked to be reached"
-    },
-    "reason_for_call": {
-      "type": "string",
-      "description": "One or two sentences on why they called and what they need"
-    }
-  }
-}
-```
+The function does not hardcode those names. It renders every non-empty field
+the structured output returns, converting keys to readable labels
+(`callback_number` becomes "Callback Number"), so fields can be added or
+renamed in Vapi without editing this code. Fields the caller never mentioned
+come back empty and are omitted from the text.
 
-Fields the caller never mentioned come back empty; the function falls back to
-the call summary and the caller ID in that case.
+Both payload shapes are handled: named Structured Outputs arrive under
+`analysis.structuredOutputs`, the older inline schema under
+`analysis.structuredData`. The caller ID and the call summary are appended when
+available, so an alert still carries useful information even if extraction
+returns nothing.

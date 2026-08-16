@@ -7,12 +7,28 @@
  * Set this function's URL as the Server URL on the Vapi assistant, and
  * enable the "end-of-call-report" server message.
  *
+ * Every field defined on the Vapi Structured Output is rendered, so adding
+ * or renaming a field there needs no change here.
+ *
  * Required environment variables:
  *   ALERT_TO_NUMBER        - cell number to text, E.164 (e.g. +14175551234)
  *   MESSAGING_SERVICE_SID  - Twilio Messaging Service SID (MG...)
  *
  * Visibility must be Public so Vapi can reach it.
  */
+
+// callback_number -> "Callback Number"
+function toLabel(key) {
+  return key
+    .replace(/[_-]+/g, ' ')
+    .replace(/\b\w/g, function (c) {
+      return c.toUpperCase();
+    });
+}
+
+function isBlank(value) {
+  return value === null || value === undefined || String(value).trim() === '';
+}
 
 exports.handler = async function (context, event, callback) {
   const client = context.getTwilioClient();
@@ -26,29 +42,48 @@ exports.handler = async function (context, event, callback) {
     return callback(null, '');
   }
 
-  const call = msg.call || {};
   const analysis = msg.analysis || {};
-  const data = analysis.structuredData || {};
+  const call = msg.call || {};
   const customer = call.customer || msg.customer || {};
 
-  const name = data.caller_name || 'Not given';
-  const business = data.business_name || '';
-  const phone = data.callback_number || customer.number || 'Unknown';
-  const email = data.email || 'Not given';
-  const callbackTime = data.preferred_callback_time || '';
-  const reason =
-    data.reason_for_call || analysis.summary || 'No summary available';
+  // Named Structured Outputs arrive under `structuredOutputs`, keyed by id or
+  // name; the older inline schema arrives under `structuredData`. Merge both
+  // so either configuration works.
+  let data = Object.assign({}, analysis.structuredData);
 
-  const lines = [
-    'New call - SEK Automation Group',
-    `Name: ${name}`,
-    business ? `Business: ${business}` : null,
-    `Phone: ${phone}`,
-    `Email: ${email}`,
-    callbackTime ? `Callback: ${callbackTime}` : null,
-    '',
-    `Why: ${reason}`
-  ].filter(Boolean);
+  const outputs = analysis.structuredOutputs || {};
+  Object.keys(outputs).forEach(function (key) {
+    const entry = outputs[key];
+    const value = entry && entry.result ? entry.result : entry;
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      data = Object.assign(data, value);
+    }
+  });
+
+  const details = Object.keys(data)
+    .filter(function (key) {
+      return !isBlank(data[key]);
+    })
+    .map(function (key) {
+      return toLabel(key) + ': ' + data[key];
+    });
+
+  const lines = ['New call - SEK Automation Group'];
+
+  if (details.length) {
+    lines.push.apply(lines, details);
+  } else {
+    lines.push('No caller details captured.');
+  }
+
+  // Caller ID is worth having even when the caller declined to give a number.
+  if (customer.number) {
+    lines.push('Caller ID: ' + customer.number);
+  }
+
+  if (analysis.summary) {
+    lines.push('', analysis.summary);
+  }
 
   // Cap length so a long summary doesn't turn into a dozen SMS segments.
   const body = lines.join('\n').slice(0, 900);
