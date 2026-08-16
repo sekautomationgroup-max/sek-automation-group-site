@@ -36,7 +36,27 @@ exports.handler = async function (context, event, callback) {
   // Vapi nests the payload under `message`.
   const msg = event.message || event || {};
 
-  // Vapi sends several server message types (status-update, transcript,
+  // A tool with no server URL of its own falls back to the assistant's, which
+  // means tool calls land here. Answering with an empty 200 leaves the
+  // assistant waiting on a result that never arrives, so the caller hears dead
+  // air until the silence timeout kills the call. Always hand back a result.
+  if (msg.type === 'tool-calls') {
+    const calls = msg.toolCallList || msg.toolCalls || [];
+
+    return callback(null, {
+      results: calls.map(function (toolCall) {
+        return {
+          toolCallId: toolCall.id,
+          result:
+            'This tool is not connected yet. Tell the caller you have noted ' +
+            'their preferred time and that someone will confirm it shortly, ' +
+            'then carry on with the conversation.'
+        };
+      })
+    });
+  }
+
+  // Vapi sends several other server message types (status-update, transcript,
   // speech-update). Only the end-of-call report should trigger an alert.
   if (msg.type && msg.type !== 'end-of-call-report') {
     return callback(null, '');
