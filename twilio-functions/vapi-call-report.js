@@ -66,18 +66,50 @@ exports.handler = async function (context, event, callback) {
   const call = msg.call || {};
   const customer = call.customer || msg.customer || {};
 
-  // Named Structured Outputs arrive under `structuredOutputs`, keyed by id or
-  // name; the older inline schema arrives under `structuredData`. Merge both
-  // so either configuration works.
-  let data = Object.assign({}, analysis.structuredData);
+  // Temporary: Vapi has moved structured output between payload locations
+  // across versions. Log the shape so the mapping below can be confirmed.
+  console.log('MSG KEYS: ' + Object.keys(msg).join(','));
+  console.log('ANALYSIS: ' + JSON.stringify(analysis).slice(0, 1200));
 
-  const outputs = analysis.structuredOutputs || {};
-  Object.keys(outputs).forEach(function (key) {
-    const entry = outputs[key];
-    const value = entry && entry.result ? entry.result : entry;
-    if (value && typeof value === 'object' && !Array.isArray(value)) {
-      data = Object.assign(data, value);
+  // Vapi has placed extracted fields in several spots across versions: the
+  // legacy inline schema under `structuredData`, named Structured Outputs
+  // under `structuredOutputs` (keyed by id, each wrapping a `result`), and
+  // sometimes on the artifact rather than the analysis. Merge every shape
+  // that turns up so the alert works regardless of which one is in play.
+  const artifact = msg.artifact || {};
+  const sources = [
+    analysis.structuredData,
+    analysis.structuredOutputs,
+    artifact.structuredData,
+    artifact.structuredOutputs,
+    (call.analysis || {}).structuredData,
+    (call.analysis || {}).structuredOutputs
+  ];
+
+  let data = {};
+
+  sources.forEach(function (source) {
+    if (!source || typeof source !== 'object') {
+      return;
     }
+
+    Object.keys(source).forEach(function (key) {
+      const value = source[key];
+
+      // A wrapper entry like { result: {...} } holds the fields one level in;
+      // a plain scalar is already the field itself.
+      if (value && typeof value === 'object' && !Array.isArray(value)) {
+        const inner = value.result !== undefined ? value.result : value;
+
+        if (inner && typeof inner === 'object' && !Array.isArray(inner)) {
+          data = Object.assign(data, inner);
+        } else if (!isBlank(inner)) {
+          data[key] = inner;
+        }
+      } else if (!isBlank(value)) {
+        data[key] = value;
+      }
+    });
   });
 
   const details = Object.keys(data)
