@@ -2012,7 +2012,29 @@
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    trackSection(id);
   }
+
+  // This site never changes its URL, so Analytics would otherwise record every
+  // visit as one view of "/" and we would never learn which sections people
+  // actually read. Report each section as its own page view instead.
+  function trackSection(id) {
+    if (typeof gtag !== 'function') return;
+    gtag('event', 'page_view', {
+      page_title: id.charAt(0).toUpperCase() + id.slice(1),
+      page_location: window.location.origin + '/#' + id
+    });
+  }
+
+  // Phone taps are often the real conversion for a local business, and they
+  // leave no other trace in Analytics. Delegated so it covers every tel: link.
+  document.addEventListener('click', function (e) {
+    if (!e.target || !e.target.closest) return;
+    var a = e.target.closest('a[href^="tel:"]');
+    if (a && typeof gtag === 'function') {
+      gtag('event', 'contact_phone_click', { link_url: a.getAttribute('href') });
+    }
+  });
 
   // Opens the Services page and scrolls straight to the SiteWorks section
   function showSiteWorks() {
@@ -2078,6 +2100,14 @@
       if (res.ok) {
         document.getElementById('contact-form-inner').style.display = 'none';
         document.getElementById('form-success').classList.add('show');
+        // The form never navigates, so without this there is no signal Google
+        // Ads can optimise toward -- it would buy clicks instead of enquiries.
+        if (typeof gtag === 'function') {
+          gtag('event', 'generate_lead', {
+            form_name: 'ai_assessment',
+            business_type: bizType
+          });
+        }
       } else {
         alert('Something went wrong. Please try again or email us directly.');
         btn.textContent = 'Send My Assessment Request →';
