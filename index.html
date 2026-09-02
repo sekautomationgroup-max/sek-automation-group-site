@@ -906,6 +906,115 @@
     .footer-inner { flex-direction: column; gap: 32px; }
   }
 </style>
+<style id="fx-css">
+  /* ══ SCROLL FX — layered hero, reveals, stacked cards ══
+     Progressive enhancement: reveal states only apply under html.fx (set by
+     JS), so a no-JS visitor sees a plain, complete page. */
+  html { scroll-behavior: smooth; }
+
+  html.fx .page.active { animation: pageIn .45s cubic-bezier(.22,1,.36,1); }
+  @keyframes pageIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+  html.fx .rv { opacity: 0; transform: translateY(28px); }
+  html.fx .rv.in { opacity: 1; transform: none; transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); transition-delay: var(--d, 0s); }
+  html.fx h2.rv { transform: translateY(34px); }
+  html.fx h2.rv.in { transition-duration: .8s; }
+
+  /* ── HERO v2 ── */
+  .hero-v2 { min-height: calc(100vh - 120px); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 90px 32px 70px; }
+  .hero-v2::before, .hero-v2::after { display: none; }
+  .hero-layers { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .hl { position: absolute; border-radius: 50%; filter: blur(60px); will-change: transform; }
+  .hl-1 { width: 560px; height: 560px; top: -160px; right: -140px; background: radial-gradient(circle, rgba(26,111,232,.30) 0%, transparent 65%); }
+  .hl-2 { width: 460px; height: 460px; bottom: -180px; left: -120px; background: radial-gradient(circle, rgba(59,143,255,.20) 0%, transparent 65%); }
+  .hl-3 { width: 340px; height: 340px; top: 30%; left: 12%; background: radial-gradient(circle, rgba(125,255,155,.10) 0%, transparent 65%); }
+  .hero-grid-bg { position: absolute; inset: -60px; background-image: linear-gradient(rgba(126,184,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(126,184,255,.055) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse 75% 65% at 50% 42%, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 42%, #000 30%, transparent 75%); will-change: transform; }
+  .hero-inner { position: relative; z-index: 2; will-change: transform, opacity; }
+
+  /* The site's own ".hero h1 span" accent rule would paint every word-split
+     span blue; inherit restores white for line 1 and the accent for line 2. */
+  html.fx .hero-v2 h1 .w { color: inherit; display: inline-block; opacity: 0; transform: translateY(.55em); filter: blur(6px); animation: wordIn .7s cubic-bezier(.22,1,.36,1) forwards; animation-delay: calc(.12s + var(--w) * .07s); }
+  @keyframes wordIn { to { opacity: 1; transform: none; filter: blur(0); } }
+  html.fx .hero-v2 .hero-badge, html.fx .hero-v2 .hero-sub, html.fx .hero-v2 .hero-btns, html.fx .hero-v2 .hero-trust, html.fx .hero-v2 .hero-proof { opacity: 0; animation: riseIn .8s cubic-bezier(.22,1,.36,1) forwards; }
+  html.fx .hero-v2 .hero-badge { animation-delay: .05s; }
+  html.fx .hero-v2 .hero-proof { animation-delay: .58s; }
+  html.fx .hero-v2 .hero-sub   { animation-delay: .68s; }
+  html.fx .hero-v2 .hero-btns  { animation-delay: .80s; }
+  html.fx .hero-v2 .hero-trust { animation-delay: .92s; }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+
+  .hero-proof { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: #9fc4ff; background: rgba(26,111,232,.14); border: 1px solid rgba(59,143,255,.28); padding: 7px 14px; border-radius: 100px; margin: 0 0 18px; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+  .chip-f { position: absolute; z-index: 1; display: inline-flex; align-items: center; gap: 7px; background: rgba(13,27,75,.72); border: 1px solid rgba(126,184,255,.30); color: #cfe2ff; font-size: 12.5px; font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; padding: 9px 14px; border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.35); backdrop-filter: blur(6px); will-change: transform; animation: chipDrift 7s ease-in-out infinite alternate; }
+  .chip-f .cd { width: 7px; height: 7px; border-radius: 50%; background: #7DFF9B; }
+  .chip-1 { top: 22%; left: 7%; }
+  .chip-2 { top: 16%; right: 8%; animation-delay: -2s; }
+  .chip-3 { bottom: 30%; left: 10%; animation-delay: -4s; }
+  .chip-4 { bottom: 24%; right: 7%; animation-delay: -5.5s; }
+  @keyframes chipDrift { from { margin-top: -7px; } to { margin-top: 7px; } }
+
+  .scroll-cue { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,.45); display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif; z-index: 2; }
+  .scroll-cue svg { animation: cueBob 1.8s ease-in-out infinite; }
+  @keyframes cueBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+
+  /* ── Stacked service cards ── */
+  .stack-sec { padding: 96px 32px 40px; max-width: 1000px; margin: 0 auto; }
+  .stack { margin-top: 48px; }
+  .stack-card { position: sticky; top: calc(92px + var(--i) * 16px); background: var(--white); border: 1px solid var(--border); border-radius: 22px; padding: 44px 48px; margin-bottom: 36px; box-shadow: 0 -14px 44px rgba(11,31,59,.10); display: grid; grid-template-columns: 64px 1fr auto; gap: 26px; align-items: start; transform-origin: top center; will-change: transform, filter; }
+  .stack-card:last-child { margin-bottom: 0; }
+  .stack-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; color: var(--blue); background: var(--blue-xpale); border: 1px solid var(--border); width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+  .stack-card h3 { font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 10px; letter-spacing: -.3px; }
+  .stack-card p { font-size: 15.5px; line-height: 1.7; color: var(--text-body); max-width: 520px; margin-bottom: 14px; }
+  .stack-card .service-benefit { margin: 0; }
+  .stack-go { align-self: center; color: var(--blue); font-weight: 700; font-size: 14px; white-space: nowrap; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .stack-card:not(.stack-sw) { cursor: pointer; }
+  .stack-sw { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); border-color: rgba(126,184,255,.25); grid-template-columns: 1fr 0.9fr; align-items: center; }
+  .stack-sw h3 { color: #fff; font-size: 26px; }
+  .stack-sw p { color: rgba(255,255,255,.72); }
+  .stack-sw .stack-num { background: rgba(126,184,255,.14); border-color: rgba(126,184,255,.3); color: #7EB8FF; margin-bottom: 18px; }
+  .stack-sw img { width: 100%; border-radius: 14px; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 18px 44px rgba(0,0,0,.4); display: block; }
+
+  /* ── Project deck (Our Work) ── */
+  .deck-sec { max-width: 1000px; margin: 0 auto; padding: 8px 32px 64px; }
+  .deck-card { position: sticky; top: calc(96px + var(--i) * 14px); display: grid; grid-template-columns: 1fr .85fr; gap: 34px; align-items: center; text-decoration: none; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); border: 1px solid rgba(126,184,255,.22); border-radius: 24px; padding: 46px 50px; margin-bottom: 40px; min-height: 340px; box-shadow: 0 -16px 50px rgba(11,31,59,.28); transform: rotate(var(--tilt)); transform-origin: center; will-change: transform, filter; }
+  .deck-card:last-child { margin-bottom: 0; }
+  .deck-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #7EB8FF; background: rgba(126,184,255,.14); border: 1px solid rgba(126,184,255,.28); padding: 6px 12px; border-radius: 999px; margin-bottom: 16px; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .deck-card h3 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 12px; letter-spacing: -.4px; }
+  .deck-card > div > p { color: rgba(255,255,255,.70); font-size: 15px; line-height: 1.7; margin-bottom: 20px; max-width: 440px; }
+  .deck-cta { color: #7DFF9B; font-weight: 700; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .deck-card img { width: 100%; border-radius: 14px; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 18px 44px rgba(0,0,0,.4); display: block; }
+  .deck-viz { border-radius: 14px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); padding: 26px; }
+  .deck-bars { display: flex; align-items: flex-end; gap: 12px; height: 130px; margin-bottom: 14px; }
+  .deck-bars i { flex: 1; border-radius: 6px 6px 2px 2px; background: linear-gradient(180deg, #3B8FFF, rgba(59,143,255,.25)); }
+  .deck-viz .dv-cap { font-size: 12px; color: rgba(255,255,255,.5); font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: .4px; }
+  .deck-quote { font-size: 21px; line-height: 1.5; color: #fff; font-weight: 600; }
+  .deck-quote em { color: #7DFF9B; font-style: normal; }
+
+  html.fx .how-num { transition: transform .5s cubic-bezier(.34,1.56,.64,1); }
+  html.fx .how-card.rv:not(.in) .how-num { transform: scale(.6); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    html.fx .rv, html.fx .hero-v2 .hero-badge, html.fx .hero-v2 .hero-sub, html.fx .hero-v2 .hero-btns,
+    html.fx .hero-v2 .hero-trust, html.fx .hero-v2 .hero-proof, html.fx .hero-v2 h1 .w
+      { opacity: 1 !important; transform: none !important; filter: none !important; animation: none !important; }
+    html.fx .page.active { animation: none; }
+    .chip-f, .scroll-cue svg { animation: none; }
+    .stack-card, .deck-card { transform: none !important; filter: none !important; }
+  }
+
+  @media (max-width: 860px) {
+    .chip-f { display: none; }
+    .hero-v2 { min-height: auto; padding: 72px 20px 56px; }
+    .stack-sec { padding: 64px 20px 24px; }
+    .stack-card { grid-template-columns: 1fr; padding: 28px 24px; gap: 14px; top: calc(76px + var(--i) * 10px); }
+    .stack-go { display: none; }
+    .stack-sw { grid-template-columns: 1fr; }
+    .deck-card { grid-template-columns: 1fr; padding: 30px 24px; gap: 22px; min-height: 0; top: calc(80px + var(--i) * 10px); }
+    .scroll-cue { display: none; }
+  }
+</style>
+
 </head>
 <body>
 
@@ -965,27 +1074,52 @@
 ══════════════════════════════════════════════════ -->
 <div id="page-home" class="page active">
 
-  <div class="hero">
-    <div class="hero-badge">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
-      AI Solutions for Small Business
+  <div class="hero hero-v2">
+    <div class="hero-layers">
+      <div class="hero-grid-bg" data-plx="0.10"></div>
+      <div class="hl hl-1" data-plx="0.22"></div>
+      <div class="hl hl-2" data-plx="0.34"></div>
+      <div class="hl hl-3" data-plx="0.48"></div>
     </div>
-    <h1>Stop doing everything yourself —<br><span>let AI handle the busy work</span></h1>
-    <p class="hero-sub">SEK Automation Group helps small businesses save time, cut costs, and grow faster with simple, done-for-you AI tools. No tech skills needed.</p>
-    <div class="hero-btns">
-      <button class="btn btn-primary" onclick="showPage('contact')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Get a Free AI Assessment
-      </button>
-      <button class="btn btn-outline" onclick="showPage('work')">See Our Work →</button>
+
+    <div class="chip-f chip-1" data-plx="0.55"><span class="cd"></span>Invoice sent — 2 min after the job</div>
+    <div class="chip-f chip-2" data-plx="0.40"><span class="cd"></span>AI answered 3 leads overnight</div>
+    <div class="chip-f chip-3" data-plx="0.30"><span class="cd"></span>10+ hrs back every week</div>
+    <div class="chip-f chip-4" data-plx="0.62"><span class="cd"></span>Crew scheduled — Tue 8:00 AM</div>
+
+    <div class="hero-inner" data-hero>
+      <div class="hero-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+        AI Solutions for Small Business
+      </div>
+      <h1 data-split>Automate Today.<br><span>Elevate Tomorrow.</span></h1>
+      <div>
+        <span class="hero-proof">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a5 5 0 0 0-7 7l-5 5V22h3.7l5-5a5 5 0 0 0 7-7l-3.4 3.4-2.6-2.6z"/></svg>
+          16 years in manufacturing · 7 years running projects
+        </span>
+      </div>
+      <p class="hero-sub">We build the systems we spent that career wishing we had — done-for-you AI tools and software that save small businesses time and money. No tech skills needed.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" onclick="showPage('contact')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Get a Free AI Assessment
+        </button>
+        <button class="btn btn-outline" onclick="showPage('work')">See Our Work →</button>
+      </div>
+      <div class="hero-trust">
+        <span class="trust-item"><span class="trust-dot"></span>Save 10+ hours per week</span>
+        <span class="trust-item"><span class="trust-dot"></span>Affordable for small teams</span>
+        <span class="trust-item"><span class="trust-dot"></span>Up and running in days</span>
+        <span class="trust-item"><span class="trust-dot"></span>Zero tech skills required</span>
+      </div>
     </div>
-    <div class="hero-trust">
-      <span class="trust-item"><span class="trust-dot"></span>Save 10+ hours per week</span>
-      <span class="trust-item"><span class="trust-dot"></span>Affordable for small teams</span>
-      <span class="trust-item"><span class="trust-dot"></span>Up and running in days</span>
-      <span class="trust-item"><span class="trust-dot"></span>Zero tech skills required</span>
+
+    <div class="scroll-cue">Scroll
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
     </div>
   </div>
+
 
   <div class="stats-bar">
     <div class="stat-item">
@@ -1023,83 +1157,78 @@
     @media (max-width: 768px) { .sw-promo { grid-template-columns: 1fr; padding: 32px 24px; gap: 28px; } }
   </style>
 
-  <section style="padding-top: 0;">
-    <div class="sw-promo">
-      <div>
-        <div class="sw-promo-badge">New · Our Own Software</div>
-        <h2>SiteWorks — every job from<br>first call to final payment</h2>
-        <p>Our work order management platform for field service, contractors, and HVAC teams. Stop running jobs on sticky notes and spreadsheets — track, schedule, and invoice every job in one place. Live now, and we can custom-build it around how your business actually runs.</p>
-        <div class="sw-chips">
-          <span class="sw-chip">Work Orders</span>
-          <span class="sw-chip">Scheduling &amp; Dispatch</span>
-          <span class="sw-chip">Invoicing</span>
-          <span class="sw-chip">Purchase Orders</span>
-          <span class="sw-chip">Dashboards</span>
-        </div>
-        <div class="sw-promo-btns">
-          <a class="btn btn-white" href="https://sek-siteworks.app" target="_blank" rel="noopener" style="text-decoration:none;">Visit the SiteWorks site ↗</a>
-          <button class="btn btn-ghost" onclick="showSiteWorks()">See details →</button>
-          <button class="btn btn-ghost" onclick="requestDemo('SiteWorks')">Request a Demo</button>
-        </div>
-      </div>
-      <div class="sw-promo-shot">
-        <img src="assets/siteworks/dashboard.jpg" alt="SiteWorks Sales Dashboard showing revenue, outstanding invoices, and completion rate" onerror="this.parentNode.style.display='none'">
-      </div>
-    </div>
-  </section>
 
-  <section>
+  <section class="stack-sec">
     <div class="section-label">What we do</div>
     <h2 class="section-h2">AI solutions built for businesses like yours</h2>
     <p class="section-sub">We design and set up automation tools that work in the background — so you can focus on what actually grows your business.</p>
 
-    <div class="services-grid">
-      <div class="service-card" onclick="showPage('services')">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <div class="stack" data-stack>
+      <article class="stack-card" style="--i:0" onclick="showPage('services')">
+        <div class="stack-num">01</div>
+        <div>
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>AI Customer Service</h3>
+          <p>Answer customer questions 24/7 without lifting a finger. Never miss a lead again — the bot handles the routine questions and hands you the real prospects.</p>
+          <div class="service-benefit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Works while you sleep</div>
         </div>
-        <h3>AI Customer Service</h3>
-        <p>Answer customer questions 24/7 without lifting a finger. Never miss a lead again.</p>
-        <div class="service-benefit">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Works while you sleep
+        <div class="stack-go">Explore →</div>
+      </article>
+      <article class="stack-card" style="--i:1" onclick="showPage('services')">
+        <div class="stack-num">02</div>
+        <div>
+          <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <h3>Workflow Automation</h3>
+          <p>Eliminate the repetitive tasks that eat up your day. Invoices, follow-ups, data entry — more done, less effort, fewer errors.</p>
+          <div class="service-benefit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Saves 5–15 hrs/week</div>
         </div>
-      </div>
-      <div class="service-card" onclick="showPage('services')">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <div class="stack-go">Explore →</div>
+      </article>
+      <article class="stack-card" style="--i:2" onclick="showPage('services')">
+        <div class="stack-num">03</div>
+        <div>
+          <div class="service-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <h3>AI Marketing Materials</h3>
+          <p>Professional flyers, posts, and campaigns — fast, and at a fraction of the agency cost. Your brand, done properly.</p>
+          <div class="service-benefit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Fast turnaround</div>
         </div>
-        <h3>Workflow Automation</h3>
-        <p>Eliminate repetitive tasks that eat up your day. More done, less effort, fewer errors.</p>
-        <div class="service-benefit">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Saves 5–15 hrs/week
+        <div class="stack-go">Explore →</div>
+      </article>
+      <article class="stack-card" style="--i:3" onclick="showPage('services')">
+        <div class="stack-num">04</div>
+        <div>
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Lead Generation</h3>
+          <p>Capture and follow up with new leads automatically. Never let a hot lead go cold again while you're out on a job.</p>
+          <div class="service-benefit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> More conversions, less effort</div>
         </div>
-      </div>
-      <div class="service-card" onclick="showPage('services')">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <div class="stack-go">Explore →</div>
+      </article>
+      <article class="stack-card stack-sw" style="--i:4">
+        <div>
+          <div class="stack-num">05</div>
+          <div class="sw-promo-badge">New · Our Own Software</div>
+          <h3>SiteWorks — every job from first call to final payment</h3>
+          <p>Our work order management platform for field service, contractors, and HVAC teams. Track, schedule, and invoice every job in one place — live now, and customizable to how your business actually runs.</p>
+          <div class="sw-chips">
+            <span class="sw-chip">Work Orders</span>
+            <span class="sw-chip">Scheduling &amp; Dispatch</span>
+            <span class="sw-chip">Invoicing</span>
+            <span class="sw-chip">Dashboards</span>
+          </div>
+          <div class="sw-promo-btns">
+            <a class="btn btn-white" href="https://sek-siteworks.app" target="_blank" rel="noopener" style="text-decoration:none;">Visit SiteWorks ↗</a>
+            <button class="btn btn-ghost" onclick="showSiteWorks()">See details →</button>
+            <button class="btn btn-ghost" onclick="requestDemo('SiteWorks')">Request a Demo</button>
+          </div>
         </div>
-        <h3>AI Marketing Materials</h3>
-        <p>Professional flyers, posts, and campaigns — fast. Fraction of the agency cost.</p>
-        <div class="service-benefit">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Fast turnaround
+        <div>
+          <img src="assets/siteworks/dashboard.jpg" alt="SiteWorks Sales Dashboard showing revenue, outstanding invoices, and completion rate" onerror="this.parentNode.style.display='none'">
         </div>
-      </div>
-      <div class="service-card" onclick="showPage('services')">
-        <div class="service-icon">
-          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <h3>Lead Generation</h3>
-        <p>Capture and follow up with new leads automatically. Never let a hot lead go cold again.</p>
-        <div class="service-benefit">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          More conversions, less effort
-        </div>
-      </div>
+      </article>
     </div>
   </section>
+
 
   
 
@@ -1473,6 +1602,42 @@
     <p class="hero-sub">A live look at the dashboards, automation systems, and marketing tools we've built for small businesses.</p>
   </div>
 
+  <div class="deck-sec" data-deck>
+    <a class="deck-card" style="--i:0; --tilt:-1.2deg" href="#case-siteworks">
+      <div>
+        <span class="deck-tag">Live product · Built in-house</span>
+        <h3>SiteWorks — Field Service Platform</h3>
+        <p>Work orders, crew scheduling, invoicing, and real-time dashboards — the platform that runs every job from the first call to the final payment.</p>
+        <span class="deck-cta">View the project ↓</span>
+      </div>
+      <img src="assets/siteworks/dashboard.jpg" alt="SiteWorks sales dashboard" loading="lazy">
+    </a>
+    <a class="deck-card" style="--i:1; --tilt:1deg" href="#case-clarity">
+      <div>
+        <span class="deck-tag">Business intelligence</span>
+        <h3>Clarity — See your whole business on one screen</h3>
+        <p>A live dashboard that pulls sales, jobs, and cash into a single view — so the owner stops running the business from six different tabs.</p>
+        <span class="deck-cta">View the project ↓</span>
+      </div>
+      <div class="deck-viz" aria-hidden="true">
+        <div class="deck-bars"><i style="height:38%"></i><i style="height:56%"></i><i style="height:44%"></i><i style="height:72%"></i><i style="height:61%"></i><i style="height:88%"></i></div>
+        <div class="dv-cap">Revenue · Jobs · Cash — one live view</div>
+      </div>
+    </a>
+    <a class="deck-card" style="--i:2; --tilt:-0.8deg" href="#case-onepager">
+      <div>
+        <span class="deck-tag">Local business automation</span>
+        <h3>The Missed-Call Fix — a one-page automation story</h3>
+        <p>Four small automations that turn missed calls into booked jobs for a local service business — told on a single page.</p>
+        <span class="deck-cta">View the project ↓</span>
+      </div>
+      <div class="deck-viz" aria-hidden="true">
+        <div class="deck-quote">A missed call used to mean a lost customer. <em>Not anymore.</em></div>
+      </div>
+    </a>
+  </div>
+
+
   <section>
 
     <!-- ── FEATURED: SITEWORKS ─────────────────────── -->
@@ -1485,7 +1650,7 @@
     </style>
 
     <div class="section-label">Featured project</div>
-    <h2 class="section-h2">SiteWorks — Work Order Management Software</h2>
+    <h2 class="section-h2" id="case-siteworks" style="scroll-margin-top:90px;">SiteWorks — Work Order Management Software</h2>
     <p class="section-sub" style="margin-bottom: 24px;">Our own field service platform, built in-house and live today. SiteWorks runs every job from the first call to the final payment — work orders, crew scheduling, invoicing, purchase orders, and real-time dashboards in one place. Built for contractors, HVAC, and general field service teams, and customizable to how your business actually runs.</p>
 
     <div class="work-featured">
@@ -1545,7 +1710,7 @@
 
     <!-- ── FEATURED: CLARITY DASHBOARD ─────────────── -->
     <div class="section-label">Featured project</div>
-    <h2 class="section-h2">Clarity — Business Intelligence Dashboard</h2>
+    <h2 class="section-h2" id="case-clarity" style="scroll-margin-top:90px;">Clarity — Business Intelligence Dashboard</h2>
     <p class="section-sub" style="margin-bottom: 24px;">A fully interactive AI-powered analytics dashboard built for small business owners who want real-time visibility into revenue, leads, and operations — without hiring a data analyst.</p>
 
     <div class="work-featured">
@@ -1586,7 +1751,7 @@
 
     <!-- ── FEATURED: LOCAL BIZ AI ONE PAGER ────────── -->
     <div class="section-label" style="margin-top: 0;">Featured project</div>
-    <h2 class="section-h2">Local Business AI Automation — One Pager</h2>
+    <h2 class="section-h2" id="case-onepager" style="scroll-margin-top:90px;">Local Business AI Automation — One Pager</h2>
     <p class="section-sub" style="margin-bottom: 24px;">A complete AI automation pitch and explainer built for local service businesses. Shows exactly how missed call text-back, quote follow-ups, review requests, and appointment reminders work together to recover lost revenue.</p>
 
     <div class="onepager-wrap">
@@ -2414,5 +2579,124 @@
 </script>
 <!-- ══════════════════════════════════════════════════ -->
 
+<script>
+/* ══ Scroll FX engine ═══════════════════════════════════════════════════════
+   Zero dependencies. Arms html.fx (reveal states live behind it, so no-JS
+   visitors see a plain complete page), then drives four things:
+     1. reveal-on-scroll via IntersectionObserver
+     2. hero: word-stagger entrance + scroll-scrubbed parallax layers
+     3. stacked cards (home services) and project deck (Our Work) scrub
+     4. stat counter roll-up
+   Everything reads live rects each frame, so tab switches need no re-measure.
+   Honors prefers-reduced-motion by arming nothing. */
+(function () {
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('fx');
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+
+  /* ── 1. hero headline: wrap each word so CSS can stagger it ── */
+  document.querySelectorAll('[data-split]').forEach(function (el) {
+    var i = 0;
+    (function walk(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+            var s = document.createElement('span');
+            s.className = 'w';
+            s.style.setProperty('--w', i++);
+            s.textContent = part;
+            frag.appendChild(s);
+          });
+          node.replaceChild(frag, n);
+        } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
+      });
+    })(el);
+  });
+
+  /* ── 2. reveal-on-scroll: tag existing content, no markup churn ── */
+  var RV = ['.page .section-label', '.page .section-h2', '.page .section-sub',
+            '.page .how-card', '.page .cta-strip', '.page .work-featured',
+            '.page .sw-work-grid figure', '.page .stat-item', '.page .service-card',
+            '.page .contact-detail', '.page .lead-magnet'].join(',');
+  var idx = 0;
+  document.querySelectorAll(RV).forEach(function (el) {
+    if (el.closest('.hero-v2')) return;            // hero runs its own entrance
+    el.classList.add('rv');
+    el.style.setProperty('--d', ((idx++ % 4) * 0.07).toFixed(2) + 's');
+  });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
+
+  /* ── 3. stat roll-up (10+ / 48 hrs / 24/7) ── */
+  var statIO = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      statIO.unobserve(e.target);
+      e.target.querySelectorAll('.stat-num').forEach(function (n) {
+        var m = /^(\d+)([\s\S]*)$/.exec(n.textContent.trim());
+        if (!m || m[1] === '0') return;
+        var target = +m[1], suffix = m[2], t0 = null;
+        (function tick(ts) {
+          if (!t0) t0 = ts;
+          var p = clamp((ts - t0) / 900);
+          n.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        })(performance.now());
+      });
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('.stats-bar').forEach(function (el) { statIO.observe(el); });
+
+  /* ── 4. per-frame scrub: hero parallax, stack, deck ── */
+  var hero = document.querySelector('.hero-v2');
+  var heroInner = document.querySelector('[data-hero]');
+  var plx = hero ? Array.prototype.slice.call(hero.querySelectorAll('[data-plx]')) : [];
+  var stacks = Array.prototype.slice.call(document.querySelectorAll('[data-stack], [data-deck]'));
+
+  function tiltOf(el) { return el.style.getPropertyValue('--tilt').trim() || '0deg'; }
+
+  function frame() {
+    /* hero: content drifts up + fades; layers and chips fall behind at their own rates */
+    if (hero && hero.offsetParent !== null) {
+      var y = window.scrollY || 0;
+      var span = hero.offsetHeight * 0.9 || 1;
+      var p = clamp(y / span);
+      if (heroInner) {
+        heroInner.style.transform = 'translateY(' + (y * 0.32).toFixed(1) + 'px) scale(' + (1 - p * 0.06).toFixed(3) + ')';
+        heroInner.style.opacity = (1 - p * 1.15).toFixed(3);
+      }
+      plx.forEach(function (el) {
+        el.style.transform = 'translateY(' + (y * parseFloat(el.dataset.plx)).toFixed(1) + 'px)';
+      });
+    }
+    /* stacks/deck: as the next card arrives, the one beneath recedes */
+    stacks.forEach(function (wrap) {
+      if (wrap.offsetParent === null) return;
+      var cards = wrap.children, isDeck = wrap.hasAttribute('data-deck');
+      for (var k = 0; k < cards.length - 1; k++) {
+        var a = cards[k].getBoundingClientRect();
+        var b = cards[k + 1].getBoundingClientRect();
+        var cover = clamp((a.bottom - b.top) / (a.height || 1));
+        var t = 'scale(' + (1 - cover * (isDeck ? 0.05 : 0.06)).toFixed(3) + ')';
+        if (isDeck) t = 'rotate(' + tiltOf(cards[k]) + ') ' + t;
+        cards[k].style.transform = t;
+        cards[k].style.filter = 'brightness(' + (1 - cover * 0.3).toFixed(3) + ')';
+      }
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
 </body>
 </html>
