@@ -64,6 +64,7 @@
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Workflow Automation" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Marketing Materials" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Lead Generation" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Website Building" }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": 50, "priceCurrency": "USD" } },
       { "@type": "Offer", "itemOffered": { "@type": "SoftwareApplication", "name": "SiteWorks", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "url": "https://sek-siteworks.app" } }
     ]
   }
@@ -943,7 +944,9 @@
   html.fx .hero-v2 .hero-trust { animation-delay: .92s; }
   @keyframes riseIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 
-  .hero-proof { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: #9fc4ff; background: rgba(26,111,232,.14); border: 1px solid rgba(59,143,255,.28); padding: 7px 14px; border-radius: 100px; margin: 0 0 18px; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .hero-proof { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: #9fc4ff; background: rgba(26,111,232,.14); border: 1px solid rgba(59,143,255,.28); padding: 7px 16px; border-radius: 100px; margin: 0 0 18px; font-family: 'Plus Jakarta Sans', sans-serif; max-width: min(92%, 660px); line-height: 1.45; text-align: left; }
+  .hero-proof svg { flex-shrink: 0; }
+  @media (max-width: 640px) { .hero-proof { border-radius: 16px; } }
 
   .chip-f { position: absolute; z-index: 1; display: inline-flex; align-items: center; gap: 7px; background: rgba(13,27,75,.72); border: 1px solid rgba(126,184,255,.30); color: #cfe2ff; font-size: 12.5px; font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; padding: 9px 14px; border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.35); backdrop-filter: blur(6px); will-change: transform; animation: chipDrift 7s ease-in-out infinite alternate; }
   .chip-f .cd { width: 7px; height: 7px; border-radius: 50%; background: #7DFF9B; }
@@ -1096,7 +1099,7 @@
       <div>
         <span class="hero-proof">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a5 5 0 0 0-7 7l-5 5V22h3.7l5-5a5 5 0 0 0 7-7l-3.4 3.4-2.6-2.6z"/></svg>
-          16 years in manufacturing · 7 years running projects
+          Built on 16 Years of Doing the Work &mdash; Not Just Talking About It
         </span>
       </div>
       <p class="hero-sub">We build the systems we spent that career wishing we had — done-for-you AI tools and software that save small businesses time and money. No tech skills needed.</p>
@@ -1204,9 +1207,19 @@
         </div>
         <div class="stack-go">Explore →</div>
       </article>
-      <article class="stack-card stack-sw" style="--i:4">
+      <article class="stack-card" style="--i:4" onclick="showPage('services')">
+        <div class="stack-num">05</div>
         <div>
-          <div class="stack-num">05</div>
+          <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M2 9h20M6 6.5h.01M8.5 6.5h.01"/></svg></div>
+          <h3>Custom Website Building</h3>
+          <p>A clean, fast website for your business — designed, built, and launched for you. Starting at just $50.</p>
+          <div class="service-benefit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Starting at $50</div>
+        </div>
+        <div class="stack-go">Explore →</div>
+      </article>
+      <article class="stack-card stack-sw" style="--i:5">
+        <div>
+          <div class="stack-num">06</div>
           <div class="sw-promo-badge">New · Our Own Software</div>
           <h3>SiteWorks — every job from first call to final payment</h3>
           <p>Our work order management platform for field service, contractors, and HVAC teams. Track, schedule, and invoice every job in one place — live now, and customizable to how your business actually runs.</p>
@@ -1375,9 +1388,40 @@
         @media (max-width: 768px) { .sw-shots { grid-template-columns: 1fr; } }
       </style>
 
+      <div style="margin-bottom: 72px;">
+        <div class="section-label">Service 05</div>
+        <h2 class="section-h2" style="font-size: 26px;">Custom Website Building</h2>
+        <p class="section-sub" style="margin-bottom: 8px;">A professional website shouldn't cost a fortune or take a month. We design and build clean, fast sites for small businesses — done for you, live in days, and easy to update. Hosting guidance, contact forms, and mobile-ready layouts included.</p>
+        <p style="font-size: 15px; color: var(--blue); font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; margin-bottom: 22px;">Starting at $50 · every site built custom to your business</p>
+
+        <style>
+          .webx-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 14px; }
+          .webx-grid figure { margin: 0; }
+          .webx-grid img { width: 100%; display: block; border-radius: var(--radius-md); border: 1px solid var(--border); box-shadow: 0 10px 26px rgba(11,31,59,0.12); }
+          .webx-grid figcaption { font-size: 12.5px; color: var(--steel); margin-top: 8px; font-family: 'Plus Jakarta Sans', sans-serif; }
+          @media (max-width: 768px) { .webx-grid { grid-template-columns: 1fr; } }
+        </style>
+        <div class="webx-grid">
+          <figure>
+            <img src="assets/websites/ex-landscaping.jpg" alt="Concept website design for a landscaping company — light theme with serif headline and service cards" loading="lazy">
+            <figcaption>Landscaping — light &amp; organic</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/websites/ex-coffee.jpg" alt="Concept website design for a coffee shop — warm cream theme with menu highlights" loading="lazy">
+            <figcaption>Coffee shop — warm &amp; inviting</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/websites/ex-auto.jpg" alt="Concept website design for an auto repair shop — dark theme with bold red accents" loading="lazy">
+            <figcaption>Auto repair — bold &amp; dark</figcaption>
+          </figure>
+        </div>
+        <p style="font-size: 12.5px; color: var(--steel); margin-bottom: 20px;">Concept designs by SEK — your site is designed around your business, your colors, and your customers.</p>
+        <button class="btn btn-primary" onclick="showPage('contact')">Get My Website Started →</button>
+      </div>
+
       <div id="siteworks" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; scroll-margin-top: 90px;">
         <div>
-          <div class="section-label">Service 05</div>
+          <div class="section-label">Service 06</div>
           <h2 class="section-h2" style="font-size: 26px;">SiteWorks — Work Order Management Software</h2>
           <p style="color: var(--steel); margin-bottom: 16px; font-size: 15px; line-height: 1.7;">SiteWorks is our own work order management platform, purpose-built for field service, contractors, and HVAC teams. Run every job from the first request to the paid invoice in one place — no more sticky notes, spreadsheets, or lost paperwork. And because we build it in-house, SiteWorks can be custom-tailored to fit exactly how your business runs.</p>
           <ul class="value-list">
@@ -2158,6 +2202,7 @@
       <a onclick="showPage('services')">Workflow Automation</a>
       <a onclick="showPage('services')">AI Marketing Materials</a>
       <a onclick="showPage('services')">Lead Generation</a>
+      <a onclick="showPage('services')">Custom Website Building</a>
     </div>
     <div class="footer-links">
       <h4>Get started</h4>
@@ -2388,7 +2433,7 @@
 
   var swHist=[], swBusy=false, swStarted=false, swLead=false, swLog=[];
 
-  var SYSTEM = 'You are the friendly AI assistant for SEK Automation Group. You help small business owners understand how AI automation can save them time and money.\n\nABOUT SEK AUTOMATION GROUP:\n- Done-for-you AI automation for small businesses — no tech skills needed\n- Services: AI Customer Service Chatbot, Workflow Automation, AI Marketing Materials, AI Lead Generation, and SiteWorks work order management software\n- Save 10+ hours/week, setup in 48 hours, works 24/7\n- Pricing discussed during free assessment\n- Contact: sekautomationgroup@gmail.com\n- Free AI Assessment (20 min) + Free AI Starter Checklist PDF\n\nSERVICES:\n1. AI Chatbot — 24/7 responses, books appointments, captures leads, under 3s response\n2. Workflow Automation — invoicing, reminders, follow-ups, saves 5-15 hrs/week\n3. AI Marketing — flyers, social posts, email campaigns, fraction of agency cost\n4. Lead Generation — automated email+SMS follow-up, lead capture, CRM integration\n5. SiteWorks — our own work order management software for field service, contractors, and HVAC\n\nSITEWORKS (our flagship software product, live and available today):\n- A work order management platform built in-house by SEK Automation Group\n- Built for field service businesses, contractors, and HVAC companies\n- Core features: work orders with live status tracking, drag-and-drop scheduling and dispatch, invoicing, purchase orders, customer and property records, and real-time sales dashboards\n- Techs get a phone-friendly view: start/complete jobs, automatic time tracking, job notes, parts and materials, receipt photos, and one-tap directions\n- Tracks every job from the first call to the final payment so nothing falls through the cracks\n- Runs in any browser, no hardware to install\n- Can be custom-built and tailored to how a specific business runs\n- If someone asks about SiteWorks, work order software, job tracking, scheduling crews, or field service management, explain SiteWorks and offer to set up a live demo\n- Do not quote SiteWorks pricing; pricing is discussed during the free assessment or demo\n\nMISSED CALL TEXT-BACK: Customer calls, you miss it, they get a text in 60 seconds. Recovers 3-5 jobs/month on average.\n\nYOUR JOB:\n- Answer questions helpfully and concisely (max 3 short paragraphs)\n- Capture name+email+business when someone wants more info\n- Encourage free assessment booking\n- Never invent pricing numbers\n- Tone: friendly, plain English, no jargon\n- If asked about pricing say exact numbers come from the free assessment';
+  var SYSTEM = 'You are the friendly AI assistant for SEK Automation Group. You help small business owners understand how AI automation can save them time and money.\n\nABOUT SEK AUTOMATION GROUP:\n- Done-for-you AI automation for small businesses — no tech skills needed\n- Services: AI Customer Service Chatbot, Workflow Automation, AI Marketing Materials, AI Lead Generation, Custom Website Building (starting at $50), and SiteWorks work order management software\n- Save 10+ hours/week, setup in 48 hours, works 24/7\n- Pricing discussed during free assessment\n- Contact: sekautomationgroup@gmail.com\n- Free AI Assessment (20 min) + Free AI Starter Checklist PDF\n\nSERVICES:\n1. AI Chatbot — 24/7 responses, books appointments, captures leads, under 3s response\n2. Workflow Automation — invoicing, reminders, follow-ups, saves 5-15 hrs/week\n3. AI Marketing — flyers, social posts, email campaigns, fraction of agency cost\n4. Lead Generation — automated email+SMS follow-up, lead capture, CRM integration\n5. Custom Website Building — clean, fast small-business websites, designed and built for you, starting at $50 (final price depends on size and features)\n6. SiteWorks — our own work order management software for field service, contractors, and HVAC\n\nSITEWORKS (our flagship software product, live and available today):\n- A work order management platform built in-house by SEK Automation Group\n- Built for field service businesses, contractors, and HVAC companies\n- Core features: work orders with live status tracking, drag-and-drop scheduling and dispatch, invoicing, purchase orders, customer and property records, and real-time sales dashboards\n- Techs get a phone-friendly view: start/complete jobs, automatic time tracking, job notes, parts and materials, receipt photos, and one-tap directions\n- Tracks every job from the first call to the final payment so nothing falls through the cracks\n- Runs in any browser, no hardware to install\n- Can be custom-built and tailored to how a specific business runs\n- If someone asks about SiteWorks, work order software, job tracking, scheduling crews, or field service management, explain SiteWorks and offer to set up a live demo\n- Do not quote SiteWorks pricing; pricing is discussed during the free assessment or demo\n\nMISSED CALL TEXT-BACK: Customer calls, you miss it, they get a text in 60 seconds. Recovers 3-5 jobs/month on average.\n\nYOUR JOB:\n- Answer questions helpfully and concisely (max 3 short paragraphs)\n- Capture name+email+business when someone wants more info\n- Encourage free assessment booking\n- Never invent pricing numbers\n- Tone: friendly, plain English, no jargon\n- If asked about pricing say exact numbers come from the free assessment';
 
   // Auto-open chat after 3 seconds
   window.addEventListener('load', function(){
