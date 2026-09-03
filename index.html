@@ -65,6 +65,7 @@
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Marketing Materials" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Lead Generation" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Website Building" }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": 50, "priceCurrency": "USD" } },
+      { "@type": "Offer", "itemOffered": { "@type": "SoftwareApplication", "name": "SEK Waterline", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "url": "https://sekautomationgroup.org/waterline.html" }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": 45, "priceCurrency": "USD" } },
       { "@type": "Offer", "itemOffered": { "@type": "SoftwareApplication", "name": "SiteWorks", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "url": "https://sek-siteworks.app" } }
     ]
   }
@@ -977,6 +978,15 @@
   .stack-sw .stack-num { background: rgba(126,184,255,.14); border-color: rgba(126,184,255,.3); color: #7EB8FF; margin-bottom: 18px; }
   .stack-sw img { width: 100%; border-radius: 14px; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 18px 44px rgba(0,0,0,.4); display: block; }
 
+  /* SEK Waterline gets the same featured treatment in its own deep-water palette */
+  .stack-wl { background: linear-gradient(135deg, #06283D 0%, #0E4D75 100%); border-color: rgba(125,214,246,.3); grid-template-columns: 1fr 0.9fr; align-items: center; }
+  .stack-wl h3 { color: #fff; font-size: 26px; }
+  .stack-wl p { color: rgba(255,255,255,.72); }
+  .stack-wl .stack-num { background: rgba(125,214,246,.15); border-color: rgba(125,214,246,.35); color: #7DD6F6; margin-bottom: 18px; }
+  .stack-wl img { width: 100%; border-radius: 14px; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 18px 44px rgba(0,0,0,.4); display: block; }
+  .stack-wl .sw-promo-badge { background: rgba(125,214,246,.16); color: #7DD6F6; }
+  @media (max-width: 860px) { .stack-wl { grid-template-columns: 1fr; } }
+
   /* ── Project deck (Our Work) ── */
   .deck-sec { max-width: 1000px; margin: 0 auto; padding: 8px 32px 64px; }
   .deck-card { position: sticky; top: calc(96px + var(--i) * 14px); display: grid; grid-template-columns: 1fr .85fr; gap: 34px; align-items: center; text-decoration: none; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); border: 1px solid rgba(126,184,255,.22); border-radius: 24px; padding: 46px 50px; margin-bottom: 40px; min-height: 340px; box-shadow: 0 -16px 50px rgba(11,31,59,.28); transform: rotate(var(--tilt)); transform-origin: center; will-change: transform, filter; }
@@ -1066,6 +1076,7 @@
     <a onclick="showPage('home')">Home</a>
     <a onclick="showPage('services')">Services</a>
     <a onclick="showSiteWorks()" class="nav-new">SiteWorks <span class="nav-new-pill">New</span></a>
+    <a href="waterline.html" class="nav-new" style="text-decoration:none;">SEK Waterline <span class="nav-new-pill">New</span></a>
     <a onclick="showPage('work')">Our Work</a>
     <a onclick="showPage('about')">About</a>
     <a onclick="showPage('contact')" class="nav-cta">Get a Free Assessment</a>
@@ -1217,9 +1228,30 @@
         </div>
         <div class="stack-go">Explore →</div>
       </article>
-      <article class="stack-card stack-sw" style="--i:5">
+      <article class="stack-card stack-wl" style="--i:5">
         <div>
           <div class="stack-num">06</div>
+          <div class="sw-promo-badge">New · Our Own Software</div>
+          <h3>SEK Waterline — the complete online home for a small water district</h3>
+          <p>A modern public website, online bill pay with autopay, the office's full billing system, and a phone-friendly meter-reading app — one monthly price, live in days. From $45/month.</p>
+          <div class="sw-chips">
+            <span class="sw-chip">Public Website</span>
+            <span class="sw-chip">Online Bill Pay</span>
+            <span class="sw-chip">Billing System</span>
+            <span class="sw-chip">Meter Reading</span>
+          </div>
+          <div class="sw-promo-btns">
+            <a class="btn btn-white" href="waterline.html" style="text-decoration:none;">See SEK Waterline →</a>
+            <button class="btn btn-ghost" onclick="requestWaterlineDemo()">Request a Demo</button>
+          </div>
+        </div>
+        <div>
+          <img src="assets/waterline/01-landing-hero.jpg" alt="SEK Waterline public website for a rural water district, with service status and live news ticker" onerror="this.parentNode.style.display='none'">
+        </div>
+      </article>
+      <article class="stack-card stack-sw" style="--i:6">
+        <div>
+          <div class="stack-num">07</div>
           <div class="sw-promo-badge">New · Our Own Software</div>
           <h3>SiteWorks — every job from first call to final payment</h3>
           <p>Our work order management platform for field service, contractors, and HVAC teams. Track, schedule, and invoice every job in one place — live now, and customizable to how your business actually runs.</p>
@@ -1419,9 +1451,21 @@
         <button class="btn btn-primary" onclick="showPage('contact')">Get My Website Started →</button>
       </div>
 
+      <div style="margin-bottom: 72px;">
+        <div class="section-label">Service 06</div>
+        <h2 class="section-h2" style="font-size: 26px;">SEK Waterline — Software for Rural Water Districts</h2>
+        <p class="section-sub" style="margin-bottom: 18px;">Our second in-house product: the complete online home for a small water district. A modern public website residents can actually use, online bill pay with autopay, the office's full billing and customer system, and a phone-friendly meter-reading app for the field — one monthly price, live in days.</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px;" class="wl-mini">
+          <img src="assets/waterline/01-landing-hero.jpg" alt="Waterline public website for a water district" style="width:100%; border-radius: var(--radius-md); border: 1px solid var(--border); box-shadow: 0 10px 26px rgba(11,31,59,0.12);" loading="lazy">
+          <img src="assets/waterline/12-office-dashboard.jpg" alt="Waterline office dashboard with collections and cycle progress" style="width:100%; border-radius: var(--radius-md); border: 1px solid var(--border); box-shadow: 0 10px 26px rgba(11,31,59,0.12);" loading="lazy">
+        </div>
+        <p style="font-size: 15px; color: var(--blue); font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; margin-bottom: 20px;">From $45/month + $415 one-time setup</p>
+        <a class="btn btn-primary" href="waterline.html" style="text-decoration:none;">See Waterline in Detail →</a>
+      </div>
+
       <div id="siteworks" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; scroll-margin-top: 90px;">
         <div>
-          <div class="section-label">Service 06</div>
+          <div class="section-label">Service 07</div>
           <h2 class="section-h2" style="font-size: 26px;">SiteWorks — Work Order Management Software</h2>
           <p style="color: var(--steel); margin-bottom: 16px; font-size: 15px; line-height: 1.7;">SiteWorks is our own work order management platform, purpose-built for field service, contractors, and HVAC teams. Run every job from the first request to the paid invoice in one place — no more sticky notes, spreadsheets, or lost paperwork. And because we build it in-house, SiteWorks can be custom-tailored to fit exactly how your business runs.</p>
           <ul class="value-list">
@@ -1656,7 +1700,16 @@
       </div>
       <img src="assets/siteworks/dashboard.jpg" alt="SiteWorks sales dashboard" loading="lazy">
     </a>
-    <a class="deck-card" style="--i:1; --tilt:1deg" href="#case-clarity">
+    <a class="deck-card" style="--i:1; --tilt:0.9deg" href="#case-waterline">
+      <div>
+        <span class="deck-tag">New product · Built in-house</span>
+        <h3>SEK Waterline — Water District Platform</h3>
+        <p>Website, bill pay, billing, and meter reading for rural water districts — everything the office does, online, at one monthly price.</p>
+        <span class="deck-cta">View the project ↓</span>
+      </div>
+      <img src="assets/waterline/01-landing-hero.jpg" alt="SEK Waterline district website home page" loading="lazy">
+    </a>
+    <a class="deck-card" style="--i:2; --tilt:1deg" href="#case-clarity">
       <div>
         <span class="deck-tag">Business intelligence</span>
         <h3>Clarity — See your whole business on one screen</h3>
@@ -1668,7 +1721,7 @@
         <div class="dv-cap">Revenue · Jobs · Cash — one live view</div>
       </div>
     </a>
-    <a class="deck-card" style="--i:2; --tilt:-0.8deg" href="#case-onepager">
+    <a class="deck-card" style="--i:3; --tilt:-0.8deg" href="#case-onepager">
       <div>
         <span class="deck-tag">Local business automation</span>
         <h3>The Missed-Call Fix — a one-page automation story</h3>
@@ -1750,6 +1803,47 @@
     <div class="sw-work-btns">
       <button class="btn btn-primary" onclick="requestDemo('SiteWorks')">Request a Demo →</button>
       <button class="btn btn-outline" onclick="showSiteWorks()">See full details</button>
+    </div>
+
+    <!-- ── FEATURED: SEK WATERLINE ─────────────────── -->
+    <div class="section-label">Featured project</div>
+    <h2 class="section-h2" id="case-waterline" style="scroll-margin-top:90px;">SEK Waterline — Software for Rural Water Districts</h2>
+    <p class="section-sub" style="margin-bottom: 24px;">Our second in-house product, live in sandbox today. SEK Waterline gives a small water district its entire online life in one system: a modern public website residents can actually use, online bill pay with autopay and a leak safeguard, the office's full billing and customer system, and a phone-friendly meter-reading app for the field tech. Built for districts of 100 to 5,000 connections.</p>
+
+    <div class="work-featured">
+      <div class="work-featured-header">
+        <div class="work-featured-meta">
+          <div class="work-featured-dot"></div>
+          <div>
+            <div class="work-featured-title">SEK Waterline — Utility Platform</div>
+            <div class="work-featured-sub">New product · Built in-house by SEK Automation Group</div>
+          </div>
+        </div>
+        <span class="work-featured-tag">Our Software</span>
+      </div>
+      <div class="sw-work-grid">
+        <figure>
+          <img src="assets/waterline/01-landing-hero.jpg" alt="SEK Waterline public district website with service status card and live ticker" loading="lazy">
+          <figcaption class="sw-cap">Public website — what residents see</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/waterline/09-customer-account-home.jpg" alt="Customer portal with balance, pay now, water-use chart and activity" loading="lazy">
+          <figcaption class="sw-cap">Customer portal — balance, usage &amp; pay online</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/waterline/12-office-dashboard.jpg" alt="Office dashboard with collections, past due, and cycle progress" loading="lazy">
+          <figcaption class="sw-cap">Office dashboard — collections &amp; cycle progress</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/waterline/15-office-billing-run.jpg" alt="Billing run with pre-flight checklist and sample bill" loading="lazy">
+          <figcaption class="sw-cap">Billing run — checklist, sample, generate</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="sw-work-btns">
+      <a class="btn btn-primary" href="waterline.html" style="text-decoration:none;">See SEK Waterline →</a>
+      <button class="btn btn-outline" onclick="requestWaterlineDemo()">Request a Demo</button>
     </div>
 
     <!-- ── FEATURED: CLARITY DASHBOARD ─────────────── -->
@@ -2190,6 +2284,7 @@
       <a onclick="showPage('home')">Home</a>
       <a onclick="showPage('services')">Services</a>
       <a onclick="showPage('work')">Our Work</a>
+      <a href="waterline.html">SEK Waterline</a>
       <a onclick="showPage('about')">About</a>
       <a onclick="showPage('contact')">Contact</a>
       <a href="https://sek-siteworks.app" target="_blank" rel="noopener">SiteWorks ↗</a>
@@ -2203,6 +2298,7 @@
       <a onclick="showPage('services')">AI Marketing Materials</a>
       <a onclick="showPage('services')">Lead Generation</a>
       <a onclick="showPage('services')">Custom Website Building</a>
+      <a href="waterline.html">SEK Waterline for Water Districts</a>
     </div>
     <div class="footer-links">
       <h4>Get started</h4>
@@ -2269,6 +2365,13 @@
     }
     var ch = document.getElementById('challenge');
     if (ch) { ch.value = "I'd like to request a demo of " + product + " work order management software."; }
+  }
+
+  // Same idea for SEK Waterline — the wording has to fit a water district, not a contractor
+  function requestWaterlineDemo() {
+    showPage('contact');
+    var ch = document.getElementById('challenge');
+    if (ch) { ch.value = "I'd like a SEK Waterline demo for our water district."; }
   }
 
   // Swaps a missing screenshot for a styled "coming soon" placeholder
@@ -2433,7 +2536,7 @@
 
   var swHist=[], swBusy=false, swStarted=false, swLead=false, swLog=[];
 
-  var SYSTEM = 'You are the friendly AI assistant for SEK Automation Group. You help small business owners understand how AI automation can save them time and money.\n\nABOUT SEK AUTOMATION GROUP:\n- Done-for-you AI automation for small businesses — no tech skills needed\n- Services: AI Customer Service Chatbot, Workflow Automation, AI Marketing Materials, AI Lead Generation, Custom Website Building (starting at $50), and SiteWorks work order management software\n- Save 10+ hours/week, setup in 48 hours, works 24/7\n- Pricing discussed during free assessment\n- Contact: sekautomationgroup@gmail.com\n- Free AI Assessment (20 min) + Free AI Starter Checklist PDF\n\nSERVICES:\n1. AI Chatbot — 24/7 responses, books appointments, captures leads, under 3s response\n2. Workflow Automation — invoicing, reminders, follow-ups, saves 5-15 hrs/week\n3. AI Marketing — flyers, social posts, email campaigns, fraction of agency cost\n4. Lead Generation — automated email+SMS follow-up, lead capture, CRM integration\n5. Custom Website Building — clean, fast small-business websites, designed and built for you, starting at $50 (final price depends on size and features)\n6. SiteWorks — our own work order management software for field service, contractors, and HVAC\n\nSITEWORKS (our flagship software product, live and available today):\n- A work order management platform built in-house by SEK Automation Group\n- Built for field service businesses, contractors, and HVAC companies\n- Core features: work orders with live status tracking, drag-and-drop scheduling and dispatch, invoicing, purchase orders, customer and property records, and real-time sales dashboards\n- Techs get a phone-friendly view: start/complete jobs, automatic time tracking, job notes, parts and materials, receipt photos, and one-tap directions\n- Tracks every job from the first call to the final payment so nothing falls through the cracks\n- Runs in any browser, no hardware to install\n- Can be custom-built and tailored to how a specific business runs\n- If someone asks about SiteWorks, work order software, job tracking, scheduling crews, or field service management, explain SiteWorks and offer to set up a live demo\n- Do not quote SiteWorks pricing; pricing is discussed during the free assessment or demo\n\nMISSED CALL TEXT-BACK: Customer calls, you miss it, they get a text in 60 seconds. Recovers 3-5 jobs/month on average.\n\nYOUR JOB:\n- Answer questions helpfully and concisely (max 3 short paragraphs)\n- Capture name+email+business when someone wants more info\n- Encourage free assessment booking\n- Never invent pricing numbers\n- Tone: friendly, plain English, no jargon\n- If asked about pricing say exact numbers come from the free assessment';
+  var SYSTEM = 'You are the friendly AI assistant for SEK Automation Group. You help small business owners understand how AI automation can save them time and money.\n\nABOUT SEK AUTOMATION GROUP:\n- Done-for-you AI automation for small businesses — no tech skills needed\n- Services: AI Customer Service Chatbot, Workflow Automation, AI Marketing Materials, AI Lead Generation, Custom Website Building (starting at $50), SiteWorks work order management software, and SEK Waterline software for rural water districts\n- Save 10+ hours/week, setup in 48 hours, works 24/7\n- Pricing discussed during free assessment\n- Contact: sekautomationgroup@gmail.com\n- Free AI Assessment (20 min) + Free AI Starter Checklist PDF\n\nSERVICES:\n1. AI Chatbot — 24/7 responses, books appointments, captures leads, under 3s response\n2. Workflow Automation — invoicing, reminders, follow-ups, saves 5-15 hrs/week\n3. AI Marketing — flyers, social posts, email campaigns, fraction of agency cost\n4. Lead Generation — automated email+SMS follow-up, lead capture, CRM integration\n5. Custom Website Building — clean, fast small-business websites, designed and built for you, starting at $50 (final price depends on size and features)\n6. SEK Waterline — our software for rural water districts and small utilities: public website, online bill pay, billing system, and a meter-reading app, from $45/month plus $415 setup; details at sekautomationgroup.org/waterline.html\n7. SiteWorks — our own work order management software for field service, contractors, and HVAC\n\nSITEWORKS (our flagship software product, live and available today):\n- A work order management platform built in-house by SEK Automation Group\n- Built for field service businesses, contractors, and HVAC companies\n- Core features: work orders with live status tracking, drag-and-drop scheduling and dispatch, invoicing, purchase orders, customer and property records, and real-time sales dashboards\n- Techs get a phone-friendly view: start/complete jobs, automatic time tracking, job notes, parts and materials, receipt photos, and one-tap directions\n- Tracks every job from the first call to the final payment so nothing falls through the cracks\n- Runs in any browser, no hardware to install\n- Can be custom-built and tailored to how a specific business runs\n- If someone asks about SiteWorks, work order software, job tracking, scheduling crews, or field service management, explain SiteWorks and offer to set up a live demo\n- Do not quote SiteWorks pricing; pricing is discussed during the free assessment or demo\n\nSEK WATERLINE (our second software product, for rural water districts and small utilities):\n- The complete online home for a small water district: public website, online bill pay, billing system, and meter-reading app in one platform at one monthly price\n- Public website: alerts with email/text sign-up, documents and forms library, board meetings, FAQ, staff directory, ADA-minded and mobile-first, editable by office staff with no coding\n- Customer portal: residents register themselves from the paper bill, see balance and water use, pay by card or bank draft through Stripe, set up autopay with a leak safeguard (bills over a customer-set limit are never auto-charged)\n- Office system: customer ledgers, meter readings with sanity flags, one-click billing runs, versioned rates, aging and payment reports, QuickBooks export, audit log\n- Meter reading: field techs use their own phone, no app install, readings flow straight to billing\n- Pricing: from $45/month plus a $415 one-time setup; exact rate depends on connection count; full details at sekautomationgroup.org/waterline.html\n- Best fit: rural water districts, water supply corporations, and small municipal water departments with 100 to 5,000 connections\n- If someone asks about water districts, utility billing, water bill pay, or meter reading, explain SEK Waterline and offer a demo\n- Never share demo logins or passwords; demos are scheduled through the contact form\n\nMISSED CALL TEXT-BACK: Customer calls, you miss it, they get a text in 60 seconds. Recovers 3-5 jobs/month on average.\n\nYOUR JOB:\n- Answer questions helpfully and concisely (max 3 short paragraphs)\n- Capture name+email+business when someone wants more info\n- Encourage free assessment booking\n- Never invent pricing numbers\n- Tone: friendly, plain English, no jargon\n- If asked about pricing say exact numbers come from the free assessment';
 
   // Auto-open chat after 3 seconds
   window.addEventListener('load', function(){
@@ -2616,6 +2719,18 @@
   function swScroll(){var m=document.getElementById('sw-msgs');if(m)setTimeout(function(){m.scrollTop=m.scrollHeight;},50);}
 
   // Auto-resize textarea
+  // waterline.html links here with ?page=contact&interest=waterline
+  document.addEventListener('DOMContentLoaded', function () {
+    var q = new URLSearchParams(location.search);
+    if (q.get('page') === 'contact') {
+      showPage('contact');
+      if (q.get('interest') === 'waterline') {
+        var ch = document.getElementById('challenge');
+        if (ch && !ch.value) ch.value = "I'd like a Waterline demo for our water district.";
+      }
+      history.replaceState(null, '', location.pathname);
+    }
+  });
   document.addEventListener('DOMContentLoaded',function(){
     var ta=document.getElementById('sek-txt');
     if(ta){ta.addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px';});}

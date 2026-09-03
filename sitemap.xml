@@ -11,6 +11,9 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://sekautomationgroup.org/waterline.html</loc>
+  </url>
+  <url>
     <loc>https://sekautomationgroup.org/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
