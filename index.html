@@ -964,13 +964,16 @@
   /* ── Stacked service cards ── */
   .stack-sec { padding: 96px 32px 40px; max-width: 1000px; margin: 0 auto; }
   .stack { margin-top: 48px; }
-  .stack-card { position: sticky; top: calc(92px + var(--i) * 16px); background: var(--white); border: 1px solid var(--border); border-radius: 22px; padding: 44px 48px; margin-bottom: 36px; box-shadow: 0 -14px 44px rgba(11,31,59,.10); display: grid; grid-template-columns: 64px 1fr auto; gap: 26px; align-items: start; transform-origin: top center; will-change: transform, filter; }
+  .stack-card { position: sticky; top: calc(92px + var(--i) * 16px); background: var(--white); border: 1px solid var(--border); border-radius: 22px; padding: 44px 48px; margin-bottom: 36px; box-shadow: 0 -14px 44px rgba(11,31,59,.10); display: grid; grid-template-columns: 64px 1fr clamp(220px, 24vw, 300px); gap: 26px; align-items: start; transform-origin: top center; will-change: transform, filter; }
   .stack-card:last-child { margin-bottom: 0; }
   .stack-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; color: var(--blue); background: var(--blue-xpale); border: 1px solid var(--border); width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
   .stack-card h3 { font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 10px; letter-spacing: -.3px; }
   .stack-card p { font-size: 15.5px; line-height: 1.7; color: var(--text-body); max-width: 520px; margin-bottom: 14px; }
   .stack-card .service-benefit { margin: 0; }
   .stack-go { align-self: center; color: var(--blue); font-weight: 700; font-size: 14px; white-space: nowrap; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .stack-visual { align-self: center; display: grid; gap: 10px; justify-items: center; }
+  .stack-visual img { width: 100%; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 12px 30px rgba(11,31,59,0.14); display: block; }
+  .stack-visual .stack-go { align-self: auto; }
   .stack-card:not(.stack-sw) { cursor: pointer; }
   .stack-sw { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); border-color: rgba(126,184,255,.25); grid-template-columns: 1fr 0.9fr; align-items: center; }
   .stack-sw h3 { color: #fff; font-size: 26px; }
@@ -1186,7 +1189,10 @@
           <p>Answer customer questions 24/7 without lifting a finger. Never miss a lead again — the bot handles the routine questions and hands you the real prospects.</p>
           <div class="service-benefit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Works while you sleep</div>
         </div>
-        <div class="stack-go">Explore →</div>
+        <div class="stack-visual">
+          <img src="assets/services/svc-chat.jpg" alt="Illustration: the AI assistant answering a customer at 10:47 PM and booking a Tuesday appointment" loading="lazy">
+          <span class="stack-go">Explore →</span>
+        </div>
       </article>
       <article class="stack-card" style="--i:1" onclick="showPage('services')">
         <div class="stack-num">02</div>
@@ -1196,7 +1202,10 @@
           <p>Eliminate the repetitive tasks that eat up your day. Invoices, follow-ups, data entry — more done, less effort, fewer errors.</p>
           <div class="service-benefit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Saves 5–15 hrs/week</div>
         </div>
-        <div class="stack-go">Explore →</div>
+        <div class="stack-visual">
+          <img src="assets/services/svc-workflow.jpg" alt="Illustration: a week of invoices, reminders, review requests and CRM updates run automatically, saving 6.5 hours" loading="lazy">
+          <span class="stack-go">Explore →</span>
+        </div>
       </article>
       <article class="stack-card" style="--i:2" onclick="showPage('services')">
         <div class="stack-num">03</div>
@@ -1206,7 +1215,10 @@
           <p>Professional flyers, posts, and campaigns — fast, and at a fraction of the agency cost. Your brand, done properly.</p>
           <div class="service-benefit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Fast turnaround</div>
         </div>
-        <div class="stack-go">Explore →</div>
+        <div class="stack-visual">
+          <img src="assets/services/svc-marketing.jpg" alt="Illustration: a generated flyer, social post and email campaign laid out on a design board" loading="lazy">
+          <span class="stack-go">Explore →</span>
+        </div>
       </article>
       <article class="stack-card" style="--i:3" onclick="showPage('services')">
         <div class="stack-num">04</div>
@@ -1216,7 +1228,10 @@
           <p>Capture and follow up with new leads automatically. Never let a hot lead go cold again while you're out on a job.</p>
           <div class="service-benefit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> More conversions, less effort</div>
         </div>
-        <div class="stack-go">Explore →</div>
+        <div class="stack-visual">
+          <img src="assets/services/svc-leads.jpg" alt="Illustration: a missed call answered by text within 60 seconds, captured as a lead and synced to the CRM" loading="lazy">
+          <span class="stack-go">Explore →</span>
+        </div>
       </article>
       <article class="stack-card" style="--i:4" onclick="showPage('services')">
         <div class="stack-num">05</div>
@@ -1226,7 +1241,10 @@
           <p>A clean, fast website for your business — designed, built, and launched for you. Starting at just $50.</p>
           <div class="service-benefit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Starting at $50</div>
         </div>
-        <div class="stack-go">Explore →</div>
+        <div class="stack-visual">
+          <img src="assets/websites/ex-landscaping.jpg" alt="Concept website design for a landscaping business — one of three example sites" loading="lazy">
+          <span class="stack-go">Explore →</span>
+        </div>
       </article>
       <article class="stack-card stack-wl" style="--i:5">
         <div>
